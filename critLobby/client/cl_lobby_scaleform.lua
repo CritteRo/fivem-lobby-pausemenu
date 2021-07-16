@@ -26,6 +26,12 @@ header = {title = "Test Lobby Title", subtitle = "This is too cool!"}
 
 menuFocus = 0
 
+function showBusySpinnerNoScaleform(_text)
+    BeginTextCommandBusyspinnerOn("STRING")
+    AddTextComponentSubstringPlayerName(_text)
+    EndTextCommandBusyspinnerOn(1)
+end
+
 function generateLobbyScaleform(_header, _buttons, _players, _details)
     --[[  SET HEADER TITLE  ]]--
     BeginScaleformMovieMethodOnFrontendHeader("SHIFT_CORONA_DESC")
@@ -241,7 +247,18 @@ end)
 RegisterCommand('hidefr', function()
     SetFrontendActive(false)
     TriggerScreenblurFadeOut(1000)--screen blur
+    PlaySoundFrontend(-1, "QUIT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
+    BusyspinnerOff()
 end)
+
+RegisterCommand('pressfr', function()
+    local last, current = GetPauseMenuSelection()
+    showBusySpinnerNoScaleform("You just used "..menuButtons[current].text..".")
+    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
+end)
+
+RegisterKeyMapping('hidefr', 'Close Frontend Menu', 'keyboard', 'BACK')
+RegisterKeyMapping('pressfr', 'Use Frontend Menu Item', 'keyboard', 'RETURN')
 
 
 --[[Citizen.CreateThread(function()
