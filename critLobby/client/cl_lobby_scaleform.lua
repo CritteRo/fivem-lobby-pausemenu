@@ -121,17 +121,17 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
 
 
         --[[ :: For some reason, when changing the text of this column, the next scaleform function will be ignored. :: ]]--
-    --[[BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_HEADER_TEXT_BY_INDEX") --Changes the column header text
-    PushScaleformMovieFunctionParameterInt(3); --// columnID. Starts at 0
+    BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_HEADER_TEXT_BY_INDEX") --Changes the column header text
+    PushScaleformMovieFunctionParameterInt(1); --// columnID. Starts at 0
     PushScaleformMovieFunctionParameterString(_header.playerHeaderText);
     PushScaleformMovieFunctionParameterInt(1); --// Column width. 1 = default / 100%
     PushScaleformMovieFunctionParameterBool(false); --forceUpper...don't really know what it does. Setting it to true will hide? the column text
     Citizen.Wait(350)
 
+    --[[ :: This function does nothing, because headers are showing by default. But it will get ignored because of the header change above. :: ]]--
     BeginScaleformMovieMethodOnFrontendHeader("SHOW_MENU") --disables the column headers
     PushScaleformMovieFunctionParameterBool(true); --toggle
-    PopScaleformMovieFunction() 
-    --Citizen.Wait(100)]]
+    PopScaleformMovieFunction()
 
     --[[  SET BUTTONS ]]--
     for i,k in pairs(_buttons) do
