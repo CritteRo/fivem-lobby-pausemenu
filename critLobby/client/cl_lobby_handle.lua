@@ -11,8 +11,8 @@ menuList = {
             stripColor = 8,
             menuHeaderText = "MENU",
             menuHeaderAlert = "",
-            buttonHeaderText = "PLAYERS",
-            buttonHeaderAlert = "",
+            playerHeaderText = "PLAYERS",
+            playerHeaderAlert = "",
             detailsHeaderText = "DETAILS",
             detailsHeaderAlert = "",
         },
@@ -37,9 +37,9 @@ menuList = {
 
 openedMenu = 0
 
-AddEventHandler('lobbymenu:CreateMenu', function(_id, _title, _subtitle, _menuHeaderText, _buttonHeaderText, _detailsHeaderText)
+AddEventHandler('lobbymenu:CreateMenu', function(_id, _title, _subtitle, _menuHeaderText, _playerHeaderText, _detailsHeaderText)
     menuList[_id] = {
-        ['header'] = {title = _title, subtitle = _subtitle, showPlayerCard = true, showHeaderStrip = true, headerColor = 2, colorStrip = 8, menuHeaderText = _menuHeaderText, menuHeaderAlert = "", buttonHeaderText = _buttonHeaderText, buttonHeaderAlert = "", detailsHeaderText = _detailsHeaderText, detailsHeaderAlert = ""},
+        ['header'] = {title = _title, subtitle = _subtitle, showPlayerCard = true, showHeaderStrip = true, headerColor = 2, colorStrip = 8, menuHeaderText = _menuHeaderText, menuHeaderAlert = "", playerHeaderText = _playerHeaderText, playerHeaderAlert = "", detailsHeaderText = _detailsHeaderText, detailsHeaderAlert = ""},
         ['details'] = {detailsTitle = "", showWarning = false, warningTitle = "", warningText = "", warningRightText = ""},
         ['buttons'] = {
             [0] = {text = "internal_button_dont_render", RockStarLogo = "", rightText = "", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
@@ -69,7 +69,7 @@ AddEventHandler('lobbymenu:SetHeaderAlert', function(_id, _column, _alertMessage
         if _column == 0 then
             menuList[_id]['header'].menuHeaderAlert = _alertMessage
         elseif _column == 1 then
-            menuList[_id]['header'].buttonHeaderAlert = _alertMessage
+            menuList[_id]['header'].playerHeaderAlert = _alertMessage
         elseif _column == 2 then
             menuList[_id]['header'].detailsHeaderAlert = _alertMessage
         else
@@ -105,7 +105,9 @@ AddEventHandler('lobbymenu:AddButton', function(_id, _buttonParams, _text, _righ
         if _showRockStarSymbol == true then
             rplus = "1"
         end
-        menuList[_id]['buttons'][#menuList[_id]['buttons']] = {text = _text, RockStarLogo = rplus, rightText = _rightText, symbol = _rightSymbol, buttonParams = _buttonParams, event = _buttonEvent}
+        local row = #menuList[_id]['buttons']+1
+        menuList[_id]['buttons'][row] = {text = _text, RockStarLogo = rplus, rightText = _rightText, symbol = _rightSymbol, buttonParams = _buttonParams, event = _buttonEvent}
+        print(row)
     else
         print('-=[[ :: WARNING :: YOU TRIED TO ADD A BUTTON FOR A NON-EXISTENT MENU ID :: ]]=-')
     end
@@ -113,17 +115,37 @@ end)
 
 AddEventHandler('lobbymenu:AddPlayer', function(_id, _name, _crew, _status, _icon, _rank, _isOnline, _rowColor, _statusColor)
     if menuList[_id] ~= nil then
-        menuList[_id]['players'][#menuList[_id]['players']] = {name = _name, crew = _crew, status = _status, icon = _icon, rank = _rank, online = _isOnline, rowColor = _rowColor, statusColor = _statusColor}
+        menuList[_id]['players'][#menuList[_id]['players']+1] = {name = _name, crew = _crew, status = _status, icon = _icon, rank = _rank, online = _isOnline, rowColor = _rowColor, statusColor = _statusColor}
     else
         print('-=[[ :: WARNING :: YOU TRIED TO ADD A PLAYER FOR A NON-EXISTENT MENU ID :: ]]=-')
     end
 end)
 
+AddEventHandler('lobbymenu:ResetPlayerList', function(_id)
+    if menuList[_id] ~= nil then
+        menuList[_id]['players']['players'] = {
+            [0] = {name = "internal_player_dont_render", crew = "", status = "", icon = 65, rank = 1, online = false, rowColor = 11, statusColor = 8},
+        }
+    else
+        print('-=[[ :: WARNING :: YOU TRIED TO RESET THE PLAYER LIST FOR A NON-EXISTENT MENU ID :: ]]=-')
+    end
+end)
+
 AddEventHandler('lobbymenu:AddDetailsRow', function(_id, _text, _rightText)
     if menuList[_id] ~= nil then
-        menuList[_id]['rowDetails'][#menuList[_id]['rowDetails']] = {text = _text, rightText = _rightText}
+        menuList[_id]['rowDetails'][#menuList[_id]['rowDetails']+1] = {text = _text, rightText = _rightText}
     else
         print('-=[[ :: WARNING :: YOU TRIED TO ADD A DETAILS ROW FOR A NON-EXISTENT MENU ID :: ]]=-')
+    end
+end)
+
+AddEventHandler('lobbymenu:ResetDetailsRowList', function(_id)
+    if menuList[_id] ~= nil then
+        menuList[_id]['rowDetails'] = {
+            [0] = {text = "internal_details_dont_render", rightText = ""},
+        }
+    else
+        print('-=[[ :: WARNING :: YOU TRIED TO RESET THE DETAILS ROW LIST FOR A NON-EXISTENT MENU ID :: ]]=-')
     end
 end)
 
@@ -147,11 +169,6 @@ AddEventHandler('lobbymenu:CloseMenu', function()
         TriggerScreenblurFadeOut(1000)--screen blur
         PlaySoundFrontend(-1, "QUIT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
     end
-end)
-
-
-RegisterCommand('showfr', function()
-    TriggerEvent('lobbymenu:OpenMenu', 'critlobby:defaultmenu', true)
 end)
 
 RegisterCommand('lobbymenu:closemenu:cmd', function()

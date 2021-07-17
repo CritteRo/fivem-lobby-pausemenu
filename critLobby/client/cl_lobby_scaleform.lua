@@ -73,6 +73,20 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     PopScaleformMovieFunction()
     --Citizen.Wait(100)
 
+    BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_ITEM_ALERT")  --Changes the column header text
+    PushScaleformMovieFunctionParameterInt(1); --// columnID. Starts at 0
+    PushScaleformMovieFunctionParameterString(_header.playerHeaderAlert); --alert text.
+    PushScaleformMovieFunctionParameterInt(_header.stripColor); --// alert color. Same IDs as player status or menu colors.
+    PopScaleformMovieFunction()
+    --Citizen.Wait(100)
+
+    BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_ITEM_ALERT")  --Changes the column header text
+    PushScaleformMovieFunctionParameterInt(2); --// columnID. Starts at 0
+    PushScaleformMovieFunctionParameterString(_header.detailsHeaderAlert); --alert text.
+    PushScaleformMovieFunctionParameterInt(_header.stripColor); --// alert color. Same IDs as player status or menu colors.
+    PopScaleformMovieFunction()
+    --Citizen.Wait(100)
+
     BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_ITEM_COLOUR")  --Changes the column header colored strip
     PushScaleformMovieFunctionParameterInt(0); --// column
     PushScaleformMovieFunctionParameterInt(_header.stripColor); --// colorID
@@ -108,15 +122,20 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
 
         --[[ :: For some reason, when changing the text of this column, the next scaleform function will be ignored. :: ]]--
     --[[BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_HEADER_TEXT_BY_INDEX") --Changes the column header text
-    PushScaleformMovieFunctionParameterInt(1); --// columnID. Starts at 0
-    PushScaleformMovieFunctionParameterString("Online Players?");
+    PushScaleformMovieFunctionParameterInt(3); --// columnID. Starts at 0
+    PushScaleformMovieFunctionParameterString(_header.playerHeaderText);
     PushScaleformMovieFunctionParameterInt(1); --// Column width. 1 = default / 100%
     PushScaleformMovieFunctionParameterBool(false); --forceUpper...don't really know what it does. Setting it to true will hide? the column text
-    Citizen.Wait(350)]]
+    Citizen.Wait(350)
+
+    BeginScaleformMovieMethodOnFrontendHeader("SHOW_MENU") --disables the column headers
+    PushScaleformMovieFunctionParameterBool(true); --toggle
+    PopScaleformMovieFunction() 
+    --Citizen.Wait(100)]]
 
     --[[  SET BUTTONS ]]--
     for i,k in pairs(_buttons) do
-        if i > 0 then
+        if i>0 then
             PushScaleformMovieFunctionN("SET_DATA_SLOT");
             PushScaleformMovieFunctionParameterInt(0); --// column
             PushScaleformMovieFunctionParameterInt(i-1); --// index
