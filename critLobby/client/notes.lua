@@ -4,7 +4,7 @@
         * You don't need to request/load scaleforms for pause menus. Scaleforms are already loaded internally (I think).
         * Scaleform functions need to be called AFTER activating the pause menu. Basically, you let GTA5 load the scaleforms internally, and the you modify them with scaleform functions.
         * use `local lastMenuID, selectedButtonUniqueID = GetPauseMenuSelection()` to get the ID of the button that you have selected.
-        * Most scaleform function can be found here: https://vespura.com/fivem/scaleform/#PAUSE_MENU_SP_CONTENT and here: https://vespura.com/fivem/scaleform/#PAUSE_MENU_HEADER
+        * Most scaleform functions can be found here: https://vespura.com/fivem/scaleform/#PAUSE_MENU_SP_CONTENT and here: https://vespura.com/fivem/scaleform/#PAUSE_MENU_HEADER
 
     Things still needing research:
         * image loading for the details tab. GTAO loads a mission image there.
