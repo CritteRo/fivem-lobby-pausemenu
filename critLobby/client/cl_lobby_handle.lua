@@ -150,7 +150,7 @@ AddEventHandler('lobbymenu:ResetDetailsRowList', function(_id)
     end
 end)
 
-AddEventHandler('lobbymenu:OpenMenu', function(_id, _blurredBackground, _canMove)
+AddEventHandler('lobbymenu:OpenMenu', function(_id, _blurredBackground)
     if menuList[_id] ~= nil then
         if _blurredBackground ~= nil and _blurredBackground == true then
             TriggerScreenblurFadeIn(1000) --screen blur
@@ -159,13 +159,6 @@ AddEventHandler('lobbymenu:OpenMenu', function(_id, _blurredBackground, _canMove
         Citizen.Wait(100)
         generateLobbyScaleform(menuList[_id]['header'], menuList[_id]['buttons'], menuList[_id]['players'], menuList[_id]['details'], menuList[_id]['rowDetails'])
         openedMenu = _id
-        if _canMove ~= nil and _canMove == true then
-            EnableAllControlActions(0)
-            DisableAllControlActions(2)
-        else
-            EnableAllControlActions(2)
-            DisableAllControlActions(0)
-        end
     else
         print('-=[[ :: WARNING :: YOU TRIED TO OPEN A NON-EXISTENT MENU ID :: ]]=-')
     end
