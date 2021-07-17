@@ -9,3 +9,7 @@ client_scripts {
     'client/cl_lobby_handle.lua',
     'client/cl_lobby_example.lua',
 }
+
+files {
+    'runtime.png',
+}

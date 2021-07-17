@@ -40,7 +40,7 @@ openedMenu = 0
 AddEventHandler('lobbymenu:CreateMenu', function(_id, _title, _subtitle, _menuHeaderText, _playerHeaderText, _detailsHeaderText)
     menuList[_id] = {
         ['header'] = {title = _title, subtitle = _subtitle, showPlayerCard = true, showHeaderStrip = true, headerColor = 2, colorStrip = 8, menuHeaderText = _menuHeaderText, menuHeaderAlert = "", playerHeaderText = _playerHeaderText, playerHeaderAlert = "", detailsHeaderText = _detailsHeaderText, detailsHeaderAlert = ""},
-        ['details'] = {detailsTitle = "", showWarning = false, warningTitle = "", warningText = "", warningRightText = ""},
+        ['details'] = {detailsTitle = "", showWarning = false, warningTitle = "", warningText = "", warningRightText = "", textureDirectory = '', textureName = ''},
         ['buttons'] = {
             [0] = {text = "internal_button_dont_render", RockStarLogo = "", rightText = "", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
         },
@@ -91,9 +91,11 @@ AddEventHandler('lobbymenu:SetWarningMessage', function(_id, _showWarning, _warn
     end
 end)
 
-AddEventHandler('lobbymenu:SetDetailsTitle', function(_id, _detailsTitle)
+AddEventHandler('lobbymenu:SetDetailsTitle', function(_id, _detailsTitle, _textureDirectory, _textureName)
     if menuList[_id] ~= nil then
         menuList[_id]['details'].detailsTitle = _detailsTitle
+        menuList[_id]['details'].textureDirectory = _textureDirectory
+        menuList[_id]['details'].textureName = _textureName
     else
         print('-=[[ :: WARNING :: YOU TRIED TO SET A DETAILS TITLE FOR A NON-EXISTENT MENU ID :: ]]=-')
     end

@@ -1,29 +1,3 @@
-menuButtons = {
-    [0] = {text = "Button 1", RockStarLogo = "1", rightText = "3"},
-    [1] = {text = "Button 2", RockStarLogo = "2", rightText = "1"},
-    [2] = {text = "Button 3", RockStarLogo = "3", rightText = "2"},
-    [3] = {text = "Button 4", RockStarLogo = "4", rightText = ""},
-    [4] = {text = "Button 6", RockStarLogo = "5", rightText = "20"},
-    [5] = {text = "Button 7", RockStarLogo = "", rightText = ""},
-    [6] = {text = "Button 8", RockStarLogo = "", rightText = ""},
-    [7] = {text = "Button 9", RockStarLogo = "", rightText = ""},
-    [8] = {text = "Button 10", RockStarLogo = "", rightText = ""},
-    [9] = {text = "Button 11", RockStarLogo = "", rightText = ""},
-    [10] = {text = "Button 12", RockStarLogo = "", rightText = ""},
-    [11] = {text = "Button 13", RockStarLogo = "", rightText = ""},
-}
-
-menuPlayers = {
-    [0] = {name = "CritteR", crew = "ADMIN", icon = 65, bool = false, rank = 60, online = false},
-    [1] = {name = "CritteRo", crew = "MOD", icon = 65, bool = false, rank = 3, online = false},
-    [2] = {name = "NTT", crew = "", icon = 65, bool = false, rank = 500, online = false},
-    [3] = {name = "Snaily <3", crew = "SEMPAI", icon = 65, bool = false, rank = 69, online = false},
-    [4] = {name = "Griefer Jesus", crew = "", icon = 64, bool = true, rank = 10, online = false},
-    [5] = {name = "Singleplayer Andy", crew = "", icon = 54, bool = true, rank = 10, online = false},
-}
-
-header = {title = "Test Lobby Title", subtitle = "This is too cool!"}
-
 menuFocus = 0
 
 function showBusySpinnerNoScaleform(_text)
@@ -162,7 +136,31 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     ScaleformMovieMethodAddParamTextureNameString(""); --when "type is 2", this is a column header.
     ScaleformMovieMethodAddParamTextureNameString(_details.detailsTitle); --when "type is 2", this is a left side text. If it's 1, then it's the title
     ScaleformMovieMethodAddParamTextureNameString(""); --when "type is 2", this is right text.
+    ScaleformMovieMethodAddParamTextureNameString(_details.textureDirectory); --TextureDirectory for column img
+    ScaleformMovieMethodAddParamTextureNameString(_details.textureName);  --TextureName for column img
+    ScaleformMovieMethodAddParamInt(1); --// idk, unused?
     EndScaleformMovieMethod();
+
+    --[[BeginScaleformMovieMethodOnFrontend("ADD_TXD_REF_RESPONSE"); --not working btw
+    ScaleformMovieMethodAddParamTextureNameString(--[['spcityraces'_details.textureDirectory); --when "type is 2", this is a left side text. If it's 1, then it's the title
+    ScaleformMovieMethodAddParamTextureNameString(--[['airport'_details.textureName); --when "type is 2", this is right text.
+    ScaleformMovieMethodAddParamInt(0);
+    EndScaleformMovieMethod();]]
+
+    --[[ :: This is the big reclange that you can find on Pause Menu at Notifications or Jobs, basically a big text box with R* background :: ]]--
+    --[[BeginScaleformMovieMethodOnFrontend("SHOW_WARNING_MESSAGE");
+    ScaleformMovieMethodAddParamInt(1);
+    ScaleformMovieMethodAddParamInt(1);
+    ScaleformMovieMethodAddParamInt(2);
+    ScaleformMovieMethodAddParamTextureNameString('test');
+    ScaleformMovieMethodAddParamTextureNameString('test2');
+    ScaleformMovieMethodAddParamInt(0);
+    ScaleformMovieMethodAddParamTextureNameString('spcityraces'); --when "type is 2", this is a left side text. If it's 1, then it's the title
+    ScaleformMovieMethodAddParamTextureNameString('airport'); --when "type is 2", this is right text.
+    ScaleformMovieMethodAddParamInt(0);
+    ScaleformMovieMethodAddParamTextureNameString('test2');
+    ScaleformMovieMethodAddParamInt(0);
+    EndScaleformMovieMethod();]]
 
     if _details.showWarning then
         BeginScaleformMovieMethodOnFrontend("SET_COLUMN_TITLE");

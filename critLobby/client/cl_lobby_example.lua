@@ -1,8 +1,8 @@
 --[[ I will add an example menu here, when the API is complete ]]--
 
 TriggerEvent('lobbymenu:CreateMenu', 'critMenu.ExampleMenu', "Timetrials: Vigero 1", "Finish the race as soon as possible.\nCompete with other players on the leaderboards.", "MENU", "TOP 10", "INFORMATION")
-TriggerEvent('lobbymenu:SetHeaderDetails', 'critMenu.ExampleMenu', false, true, 2, 6)
-TriggerEvent('lobbymenu:SetDetailsTitle', 'critMenu.ExampleMenu', "Vigero 1")
+TriggerEvent('lobbymenu:SetHeaderDetails', 'critMenu.ExampleMenu', true, true, 2, 6)
+TriggerEvent('lobbymenu:SetDetailsTitle', 'critMenu.ExampleMenu', "Vigero 1", 'sproffroad', 'spr_offroad_3')
 
 TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {}, "Add Player", "", false, 0, "lobby.AddPlayerToMenu")
 TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {}, "Add Details Row", "", false, 0, "lobby.AddDetailsToMenu")
@@ -30,5 +30,5 @@ AddEventHandler("lobby.AddWarningToMenu", function(_buttonParams)
 end)
 
 RegisterCommand('showfr', function()
-    TriggerEvent('lobbymenu:OpenMenu', 'critMenu.ExampleMenu', false, true)
+    TriggerEvent('lobbymenu:OpenMenu', 'critMenu.ExampleMenu', true, true)
 end)
