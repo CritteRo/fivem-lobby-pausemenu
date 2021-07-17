@@ -11,5 +11,5 @@ client_scripts {
 }
 
 files {
-    'runtime.png',
+    --'runtime.png',
 }

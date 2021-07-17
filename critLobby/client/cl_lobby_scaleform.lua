@@ -12,7 +12,7 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     ScaleformMovieMethodAddParamBool(true); --shifts the column headers a bit down.
     ScaleformMovieMethodAddParamBool(_header.showHeaderStrip); --This disables the colored strip above column headers.
     EndScaleformMovieMethod();
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_HEADER_TITLE")
     ScaleformMovieMethodAddParamTextureNameString(_header.title);       -- // Set the title
@@ -20,17 +20,17 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     ScaleformMovieMethodAddParamTextureNameString(_header.subtitle);    --// set the subtitle.
     ScaleformMovieMethodAddParamBool(false);          --// setting this to true distorts the header... for some reason. On normal MP_PAUSE menu, it makes the title a bit smaller.
     EndScaleformMovieMethod();
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
     BeginScaleformMovieMethodOnFrontendHeader("SHOW_HEADING_DETAILS") --disables right side player mockshot and cash / bank
     ScaleformMovieMethodAddParamBool(_header.showPlayerCard); --toggle
     EndScaleformMovieMethod()
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
     BeginScaleformMovieMethodOnFrontendHeader("SHOW_MENU") --disables the column headers
     ScaleformMovieMethodAddParamBool(true); --toggle
     EndScaleformMovieMethod()
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_HEADER_TEXT_BY_INDEX") --Changes the column header text
     ScaleformMovieMethodAddParamInt(0); --// columnID. Starts at 0
@@ -38,46 +38,46 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     ScaleformMovieMethodAddParamInt(1); --// Column width. 1 = default / 100%
     ScaleformMovieMethodAddParamBool(false); --forces UPPER TEXT for the column text.
     EndScaleformMovieMethodReturnValue()
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_ITEM_ALERT")  --Changes the column header text
     ScaleformMovieMethodAddParamInt(0); --// columnID. Starts at 0
     ScaleformMovieMethodAddParamTextureNameString(_header.menuHeaderAlert); --alert text.
     ScaleformMovieMethodAddParamInt(_header.stripColor); --// alert color. Same IDs as player status or menu colors.
     EndScaleformMovieMethodReturnValue()
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_ITEM_ALERT")  --Changes the column header text
     ScaleformMovieMethodAddParamInt(1); --// columnID. Starts at 0
     ScaleformMovieMethodAddParamTextureNameString(_header.playerHeaderAlert); --alert text.
     ScaleformMovieMethodAddParamInt(_header.stripColor); --// alert color. Same IDs as player status or menu colors.
     EndScaleformMovieMethodReturnValue()
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_ITEM_ALERT")  --Changes the column header text
     ScaleformMovieMethodAddParamInt(2); --// columnID. Starts at 0
     ScaleformMovieMethodAddParamTextureNameString(_header.detailsHeaderAlert); --alert text.
     ScaleformMovieMethodAddParamInt(_header.stripColor); --// alert color. Same IDs as player status or menu colors.
     EndScaleformMovieMethodReturnValue()
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_ITEM_COLOUR")  --Changes the column header colored strip
     ScaleformMovieMethodAddParamInt(0); --// column
     ScaleformMovieMethodAddParamInt(_header.stripColor); --// colorID
     EndScaleformMovieMethodReturnValue()
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_ITEM_COLOUR")  --Changes the column header colored strip
     ScaleformMovieMethodAddParamInt(1); --// column
     ScaleformMovieMethodAddParamInt(_header.stripColor); --// colorID
     EndScaleformMovieMethodReturnValue()
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_ITEM_COLOUR")  --Changes the column header colored strip
     ScaleformMovieMethodAddParamInt(2); --// column
     ScaleformMovieMethodAddParamInt(_header.stripColor); --// colorID
     EndScaleformMovieMethodReturnValue()
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_HEADER_TEXT_BY_INDEX") --Changes the column header text
     ScaleformMovieMethodAddParamInt(2); --// columnID. Starts at 0
@@ -85,13 +85,13 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     ScaleformMovieMethodAddParamInt(1); --// Column width. 1 = default / 100%
     ScaleformMovieMethodAddParamBool(false); --forceUpper...don't really know what it does. Setting it to true will hide? the column text
     EndScaleformMovieMethodReturnValue()
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_ALL_HIGHLIGHTS") --Changes the column header block color
     ScaleformMovieMethodAddParamInt(1); --// toggle
     ScaleformMovieMethodAddParamInt(_header.headerColor); --// colorID
     EndScaleformMovieMethodReturnValue()
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
 
         --[[ :: For some reason, when changing the text of this column, the next scaleform function will be ignored. :: ]]--
@@ -123,7 +123,7 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
         end
     end
 
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
     BeginScaleformMovieMethodOnFrontend("DISPLAY_DATA_SLOT"); --displays the data slots provided above
     ScaleformMovieMethodAddParamInt(0); --column
     EndScaleformMovieMethod();
@@ -141,11 +141,11 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     ScaleformMovieMethodAddParamInt(1); --// idk, unused?
     EndScaleformMovieMethod();
 
-    --[[BeginScaleformMovieMethodOnFrontend("ADD_TXD_REF_RESPONSE"); --not working btw
-    ScaleformMovieMethodAddParamTextureNameString(--[['spcityraces'_details.textureDirectory); --when "type is 2", this is a left side text. If it's 1, then it's the title
-    ScaleformMovieMethodAddParamTextureNameString(--[['airport'_details.textureName); --when "type is 2", this is right text.
+    BeginScaleformMovieMethodOnFrontend("ADD_TXD_REF_RESPONSE"); --not working btw
+    ScaleformMovieMethodAddParamTextureNameString(_details.textureDirectory); --when "type is 2", this is a left side text. If it's 1, then it's the title
+    ScaleformMovieMethodAddParamTextureNameString(_details.textureName); --when "type is 2", this is right text.
     ScaleformMovieMethodAddParamInt(0);
-    EndScaleformMovieMethod();]]
+    EndScaleformMovieMethod();
 
     --[[ :: This is the big reclange that you can find on Pause Menu at Notifications or Jobs, basically a big text box with R* background :: ]]--
     --[[BeginScaleformMovieMethodOnFrontend("SHOW_WARNING_MESSAGE");
@@ -195,7 +195,7 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
         end
     end
 
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
     BeginScaleformMovieMethodOnFrontend("DISPLAY_DATA_SLOT");
     ScaleformMovieMethodAddParamInt(1);
     EndScaleformMovieMethod();
@@ -226,12 +226,12 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     end
     
 
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
     BeginScaleformMovieMethodOnFrontend("DISPLAY_DATA_SLOT");
     ScaleformMovieMethodAddParamInt(3);
     EndScaleformMovieMethod();
 
-    --Citizen.Wait(100)
+    Citizen.Wait(10)
 
     --[[  SET FIRST FOCUS  ]]--
     BeginScaleformMovieMethodOnFrontend("SET_COLUMN_FOCUS");
