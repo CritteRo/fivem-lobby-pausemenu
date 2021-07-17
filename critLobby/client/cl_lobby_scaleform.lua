@@ -64,20 +64,20 @@ function generateLobbyScaleform(_header, _buttons, _players, _details)
     PushScaleformMovieFunctionParameterInt(1); --// Column width. 1 = default / 100%
     PushScaleformMovieFunctionParameterBool(true); --forces UPPER TEXT for the column text.
     PopScaleformMovieFunction()
-    Citizen.Wait(150)
+    Citizen.Wait(100)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_ITEM_ALERT")  --Changes the column header text
     PushScaleformMovieFunctionParameterInt(0); --// columnID. Starts at 0
     PushScaleformMovieFunctionParameterString("Alerts? Hell yeah!"); --alert text.
     PushScaleformMovieFunctionParameterInt(7); --// alert color. Same IDs as player status or menu colors.
     PopScaleformMovieFunction()
-    Citizen.Wait(150)
+    Citizen.Wait(100)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_ITEM_COLOUR")  --Changes the column header colored strip
     PushScaleformMovieFunctionParameterInt(1); --// column
     PushScaleformMovieFunctionParameterInt(0); --// colorID
     PopScaleformMovieFunction()
-    Citizen.Wait(150)
+    Citizen.Wait(100)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_HEADER_TEXT_BY_INDEX") --Changes the column header text
     PushScaleformMovieFunctionParameterInt(2); --// columnID. Starts at 0
@@ -85,13 +85,13 @@ function generateLobbyScaleform(_header, _buttons, _players, _details)
     PushScaleformMovieFunctionParameterInt(1); --// Column width. 1 = default / 100%
     PushScaleformMovieFunctionParameterBool(false); --forceUpper...don't really know what it does. Setting it to true will hide? the column text
     PopScaleformMovieFunction()
-    Citizen.Wait(150)
+    Citizen.Wait(100)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_ALL_HIGHLIGHTS") --Changes the column header block color
     PushScaleformMovieFunctionParameterInt(1); --// column
     PushScaleformMovieFunctionParameterInt(2); --// colorID
     PopScaleformMovieFunction()
-    Citizen.Wait(150)
+    Citizen.Wait(100)
 
 
         --[[ :: For some reason, when changing the text of this column, the next scaleform function will be ignored. :: ]]--
@@ -156,28 +156,10 @@ function generateLobbyScaleform(_header, _buttons, _players, _details)
     --///// UNSURE HOW THIS WORKS, BUT IF YOU UNCOMMENT THIS, IT'LL ADD AN ICON TO THE ROW.
     --///// MAKING THE STRING "20" AND THE BOOL TRUE SEEMS TO DO SOMETHING WITH A ROCKSTAR LOGO INSTEAD.
     --CritteR's note: I don't think the rockstar stuff works here.
-    PushScaleformMovieFunctionParameterInt(0);
-    PushScaleformMovieFunctionParameterString("20");
-    PushScaleformMovieFunctionParameterInt(0);
-    PushScaleformMovieFunctionParameterBool(true); --// SOMETHING WITH ROCKSTAR/STAR LOGO SWITCHING.
-    PopScaleformMovieFunctionVoid();
-
-    PushScaleformMovieFunctionN("SET_DATA_SLOT");
-    PushScaleformMovieFunctionParameterInt(1); --// column
-    PushScaleformMovieFunctionParameterInt(1); --// index
-    PushScaleformMovieFunctionParameterInt(0); --// menu ID 0
-    PushScaleformMovieFunctionParameterInt(0); --// unique ID 0
-    PushScaleformMovieFunctionParameterInt(10); --// type 0
-    PushScaleformMovieFunctionParameterInt(0); --// initialIndex 0
-    PushScaleformMovieFunctionParameterBool(false); --// isSelectable true
-    PushScaleformMovieFunctionParameterString("Add here should be shown to the user.");
-    PushScaleformMovieFunctionParameterString(""); --Right Text
-    --///// UNSURE HOW THIS WORKS, BUT IF YOU UNCOMMENT THIS, IT'LL ADD AN ICON TO THE ROW.
-    --///// MAKING THE STRING "20" AND THE BOOL TRUE SEEMS TO DO SOMETHING WITH A ROCKSTAR LOGO INSTEAD.
-    PushScaleformMovieFunctionParameterInt(0);
-    PushScaleformMovieFunctionParameterString("0");
-    PushScaleformMovieFunctionParameterInt(0);
-    PushScaleformMovieFunctionParameterBool(true); --// SOMETHING WITH ROCKSTAR/STAR LOGO SWITCHING.
+    --PushScaleformMovieFunctionParameterInt(0);
+    --PushScaleformMovieFunctionParameterString("20");
+    --PushScaleformMovieFunctionParameterInt(0);
+    --PushScaleformMovieFunctionParameterBool(true); --// SOMETHING WITH ROCKSTAR/STAR LOGO SWITCHING.
     PopScaleformMovieFunctionVoid();
 
     Citizen.Wait(100)
@@ -218,7 +200,7 @@ function generateLobbyScaleform(_header, _buttons, _players, _details)
 
     --[[  SET FIRST FOCUS  ]]--
     PushScaleformMovieFunctionN("SET_COLUMN_FOCUS");
-    PushScaleformMovieFunctionParameterInt(menuFocus); --// column index // _loc7_
+    PushScaleformMovieFunctionParameterInt(0); --// column index // _loc7_
     PushScaleformMovieFunctionParameterInt(1);-- // highlightIndex // _loc6_
     PushScaleformMovieFunctionParameterInt(1); --// scriptSetUniqID // _loc4_
     PushScaleformMovieFunctionParameterInt(0); --// scriptSetMenuState // _loc5_
@@ -245,16 +227,20 @@ RegisterCommand('showfr', function()
 end)
 
 RegisterCommand('hidefr', function()
-    SetFrontendActive(false)
-    TriggerScreenblurFadeOut(1000)--screen blur
-    PlaySoundFrontend(-1, "QUIT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
-    BusyspinnerOff()
+    if GetCurrentFrontendMenuVersion() == GetHashKey("FE_MENU_VERSION_CORONA") then
+        SetFrontendActive(false)
+        TriggerScreenblurFadeOut(1000)--screen blur
+        PlaySoundFrontend(-1, "QUIT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
+        BusyspinnerOff()
+    end
 end)
 
 RegisterCommand('pressfr', function()
-    local last, current = GetPauseMenuSelection()
-    showBusySpinnerNoScaleform("You just used "..menuButtons[current].text..".")
-    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
+    if GetCurrentFrontendMenuVersion() == GetHashKey("FE_MENU_VERSION_CORONA") then
+        local last, current = GetPauseMenuSelection()
+        showBusySpinnerNoScaleform("You just used "..menuButtons[current].text..".")
+        PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
+    end
 end)
 
 RegisterKeyMapping('hidefr', 'Close Frontend Menu', 'keyboard', 'BACK')
