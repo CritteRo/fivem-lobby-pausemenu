@@ -209,25 +209,27 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
 
     --[[  PLAYERS  ]]--
     for i,k in pairs(_players) do
-        PushScaleformMovieFunctionN("SET_DATA_SLOT");                   --// call scaleform function
-        PushScaleformMovieFunctionParameterInt(3);                      --// frontend menu column
-        PushScaleformMovieFunctionParameterInt(i-1);                      --// row index
-        PushScaleformMovieFunctionParameterInt(0);                     -- // menu ID
-        PushScaleformMovieFunctionParameterInt(i);                     -- // unique ID
-        PushScaleformMovieFunctionParameterInt(k.online);                     -- // type (2 = AS_ONLINE_IN_SESSION)
-        PushScaleformMovieFunctionParameterInt(k.rank);         -- // rank value / (initialIndex 1337)
-        PushScaleformMovieFunctionParameterBool(false);                -- // isSelectable
-        PushScaleformMovieFunctionParameterString(k.name);    --  // playerName
-        PushScaleformMovieFunctionParameterInt(k.rowColor);     --  // rowColor
-        PushScaleformMovieFunctionParameterBool(k.online);               --  // reduceColors (if true: removes color from left bar & reduces color opacity on row itself.)
-        PushScaleformMovieFunctionParameterInt(0);                    --  // unused
-        PushScaleformMovieFunctionParameterInt(k.icon);         --  // right player icon.
-        PushScaleformMovieFunctionParameterInt(0);                    --  // unused
-        PushScaleformMovieFunctionParameterString(--[[$"..+{pr.CrewTag}"]]k.crew);--  // crew label text. It's either broken, or I don't know how to translate Vespura's input.
-        PushScaleformMovieFunctionParameterBool(false);               --  // should be a thing to toggle blinking of (kick) icon, but doesn't seem to work.
-        PushScaleformMovieFunctionParameterString(k.status);          -- // badge/status tag text
-        PushScaleformMovieFunctionParameterInt(k.statusColor);   -- // badge/status tag background color
-        PopScaleformMovieFunctionVoid();
+        if i > 0 then
+            PushScaleformMovieFunctionN("SET_DATA_SLOT");                   --// call scaleform function
+            PushScaleformMovieFunctionParameterInt(3);                      --// frontend menu column
+            PushScaleformMovieFunctionParameterInt(i-1);                      --// row index
+            PushScaleformMovieFunctionParameterInt(0);                     -- // menu ID
+            PushScaleformMovieFunctionParameterInt(i);                     -- // unique ID
+            PushScaleformMovieFunctionParameterInt(k.online);                     -- // type (2 = AS_ONLINE_IN_SESSION)
+            PushScaleformMovieFunctionParameterInt(k.rank);         -- // rank value / (initialIndex 1337)
+            PushScaleformMovieFunctionParameterBool(false);                -- // isSelectable
+            PushScaleformMovieFunctionParameterString(k.name);    --  // playerName
+            PushScaleformMovieFunctionParameterInt(k.rowColor);     --  // rowColor
+            PushScaleformMovieFunctionParameterBool(k.online);               --  // reduceColors (if true: removes color from left bar & reduces color opacity on row itself.)
+            PushScaleformMovieFunctionParameterInt(0);                    --  // unused
+            PushScaleformMovieFunctionParameterInt(k.icon);         --  // right player icon.
+            PushScaleformMovieFunctionParameterInt(0);                    --  // unused
+            PushScaleformMovieFunctionParameterString(--[[$"..+{pr.CrewTag}"]]k.crew);--  // crew label text. It's either broken, or I don't know how to translate Vespura's input.
+            PushScaleformMovieFunctionParameterBool(false);               --  // should be a thing to toggle blinking of (kick) icon, but doesn't seem to work.
+            PushScaleformMovieFunctionParameterString(k.status);          -- // badge/status tag text
+            PushScaleformMovieFunctionParameterInt(k.statusColor);   -- // badge/status tag background color
+            PopScaleformMovieFunctionVoid();
+        end
     end
     
 

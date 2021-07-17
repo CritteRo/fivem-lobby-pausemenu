@@ -115,7 +115,8 @@ end)
 
 AddEventHandler('lobbymenu:AddPlayer', function(_id, _name, _crew, _status, _icon, _rank, _isOnline, _rowColor, _statusColor)
     if menuList[_id] ~= nil then
-        menuList[_id]['players'][#menuList[_id]['players']+1] = {name = _name, crew = _crew, status = _status, icon = _icon, rank = _rank, online = _isOnline, rowColor = _rowColor, statusColor = _statusColor}
+        local row = #menuList[_id]['players']+1
+        menuList[_id]['players'][row] = {name = _name, crew = _crew, status = _status, icon = _icon, rank = _rank, online = _isOnline, rowColor = _rowColor, statusColor = _statusColor}
     else
         print('-=[[ :: WARNING :: YOU TRIED TO ADD A PLAYER FOR A NON-EXISTENT MENU ID :: ]]=-')
     end
@@ -123,7 +124,7 @@ end)
 
 AddEventHandler('lobbymenu:ResetPlayerList', function(_id)
     if menuList[_id] ~= nil then
-        menuList[_id]['players']['players'] = {
+        menuList[_id]['players'] = {
             [0] = {name = "internal_player_dont_render", crew = "", status = "", icon = 65, rank = 1, online = false, rowColor = 11, statusColor = 8},
         }
     else
