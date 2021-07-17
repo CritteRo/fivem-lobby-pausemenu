@@ -30,5 +30,5 @@ AddEventHandler("lobby.AddWarningToMenu", function(_buttonParams)
 end)
 
 RegisterCommand('showfr', function()
-    TriggerEvent('lobbymenu:OpenMenu', 'critMenu.ExampleMenu', true)
+    TriggerEvent('lobbymenu:OpenMenu', 'critMenu.ExampleMenu', false, true)
 end)
