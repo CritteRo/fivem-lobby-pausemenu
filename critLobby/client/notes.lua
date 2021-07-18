@@ -1,17 +1,5 @@
 --[[
 
-# 
-
-## Type: Event Trigger
-
-## Usage: `test`
-
-## Params:
-* `test` :: 
-
-## Notes:
-* 
-
 
     A few notes:
         * You don't need to request/load scaleforms for pause menus. Scaleforms are already loaded internally (I think).
@@ -20,7 +8,7 @@
         * Most scaleform functions can be found here: https://vespura.com/fivem/scaleform/#PAUSE_MENU_SP_CONTENT and here: https://vespura.com/fivem/scaleform/#PAUSE_MENU_HEADER
 
     Things still needing research:
-        * image loading for the details tab. GTAO loads a mission image there.
+        * Double click interaction.
 
     HUD Colors:
         0 = 	        HUD_COLOUR_PURE_WHITE,
