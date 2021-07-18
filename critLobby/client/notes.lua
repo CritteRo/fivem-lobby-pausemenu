@@ -1,5 +1,18 @@
 --[[
 
+# 
+
+## Type: Event Trigger
+
+## Usage: `test`
+
+## Params:
+* `test` :: 
+
+## Notes:
+* 
+
+
     A few notes:
         * You don't need to request/load scaleforms for pause menus. Scaleforms are already loaded internally (I think).
         * Scaleform functions need to be called AFTER activating the pause menu. Basically, you let GTA5 load the scaleforms internally, and the you modify them with scaleform functions.

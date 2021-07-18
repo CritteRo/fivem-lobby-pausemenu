@@ -115,6 +115,16 @@ AddEventHandler('lobbymenu:AddButton', function(_id, _buttonParams, _text, _righ
     end
 end)
 
+AddEventHandler('lobbymenu:ResetButtonList', function(_id)
+    if menuList[_id] ~= nil then
+        menuList[_id]['buttons'] = {
+            [0] = {text = "internal_button_dont_render", RockStarLogo = "", rightText = "", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
+        }
+    else
+        print('-=[[ :: WARNING :: YOU TRIED TO RESET THE BUTTON LIST FOR A NON-EXISTENT MENU ID :: ]]=-')
+    end
+end)
+
 AddEventHandler('lobbymenu:AddPlayer', function(_id, _name, _crew, _status, _icon, _rank, _isOnline, _rowColor, _statusColor)
     if menuList[_id] ~= nil then
         local row = #menuList[_id]['players']+1
