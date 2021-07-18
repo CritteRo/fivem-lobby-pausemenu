@@ -139,6 +139,10 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     ScaleformMovieMethodAddParamTextureNameString(_details.textureDirectory); --TextureDirectory for column img
     ScaleformMovieMethodAddParamTextureNameString(_details.textureName);  --TextureName for column img
     ScaleformMovieMethodAddParamInt(1); --// idk, unused?
+    ScaleformMovieMethodAddParamInt(2) --setting this to 1, makes the img squashed.
+    ScaleformMovieMethodAddParamTextureNameString(_details.rpValue) --RP value
+    ScaleformMovieMethodAddParamTextureNameString(_details.cashValue) --Cash value
+    ScaleformMovieMethodAddParamTextureNameString(_details.apValue) --Ap value
     EndScaleformMovieMethod();
 
     BeginScaleformMovieMethodOnFrontend("ADD_TXD_REF_RESPONSE"); --not working btw

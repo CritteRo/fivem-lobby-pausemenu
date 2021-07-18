@@ -22,6 +22,9 @@ menuList = {
             warningTitle = "Warning",
             warningText = "Warning Text",
             warningRightText = "Right",
+            cashValue = 0,
+            rpValue = 0,
+            apValue = 0
         },
         ['buttons'] = {
             [0] = {text = "Button 1", RockStarLogo = "1", rightText = "3", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
@@ -100,6 +103,17 @@ AddEventHandler('lobbymenu:SetDetailsTitle', function(_id, _detailsTitle, _textu
         print('-=[[ :: WARNING :: YOU TRIED TO SET A DETAILS TITLE FOR A NON-EXISTENT MENU ID :: ]]=-')
     end
 end)
+
+AddEventHandler('lobbymenu:SetDetailsCashRPandAP', function(_id, _cashValue, _rpValue, _apValue)
+    if menuList[_id] ~= nil then
+        menuList[_id]['details'].cashValue = _cashValue
+        menuList[_id]['details'].rpValue = _rpValue
+        menuList[_id]['details'].apValue = _apValue
+    else
+        print('-=[[ :: WARNING :: YOU TRIED TO SET A DETAILS TITLE FOR A NON-EXISTENT MENU ID :: ]]=-')
+    end
+end)
+
 
 AddEventHandler('lobbymenu:AddButton', function(_id, _buttonParams, _text, _rightText, _showRockStarSymbol, _rightSymbol, _buttonEvent)
     if menuList[_id] ~= nil then
