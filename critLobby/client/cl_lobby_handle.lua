@@ -35,7 +35,7 @@ menuList = {
     }
 }
 
-openedMenu = 0
+openedMenu = "lobbymenu:internalmenu:please_never_use_this_in_your_code"
 
 AddEventHandler('lobbymenu:CreateMenu', function(_id, _title, _subtitle, _menuHeaderText, _playerHeaderText, _detailsHeaderText)
     menuList[_id] = {
@@ -109,7 +109,7 @@ AddEventHandler('lobbymenu:AddButton', function(_id, _buttonParams, _text, _righ
         end
         local row = #menuList[_id]['buttons']+1
         menuList[_id]['buttons'][row] = {text = _text, RockStarLogo = rplus, rightText = _rightText, symbol = _rightSymbol, buttonParams = _buttonParams, event = _buttonEvent}
-        print(row)
+        --print(row)
     else
         print('-=[[ :: WARNING :: YOU TRIED TO ADD A BUTTON FOR A NON-EXISTENT MENU ID :: ]]=-')
     end
@@ -176,11 +176,25 @@ AddEventHandler('lobbymenu:OpenMenu', function(_id, _blurredBackground)
     end
 end)
 
+AddEventHandler('lobbymenu:ReloadMenu', function()
+    if menuList[openedMenu] ~= nil then
+        if _blurredBackground ~= nil and _blurredBackground == true then
+            TriggerScreenblurFadeIn(1000) --screen blur
+        end
+        RestartFrontendMenu("FE_MENU_VERSION_CORONA", -1)
+        Citizen.Wait(100)
+        generateLobbyScaleform(menuList[openedMenu]['header'], menuList[openedMenu]['buttons'], menuList[openedMenu]['players'], menuList[openedMenu]['details'], menuList[openedMenu]['rowDetails'])
+    else
+        print('-=[[ :: WARNING :: THERE ARE NO ACTIVE MENUS :: ]]=-')
+    end
+end)
+
 AddEventHandler('lobbymenu:CloseMenu', function()
     if GetCurrentFrontendMenuVersion() == GetHashKey("FE_MENU_VERSION_CORONA") then
         SetFrontendActive(false)
         TriggerScreenblurFadeOut(1000)--screen blur
         PlaySoundFrontend(-1, "QUIT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
+        openedMenu = "lobbymenu:internalmenu:please_never_use_this_in_your_code"
     end
 end)
 
