@@ -15,9 +15,9 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     Citizen.Wait(10)
 
     BeginScaleformMovieMethodOnFrontendHeader("SET_HEADER_TITLE")
-    ScaleformMovieMethodAddParamTextureNameString(.._header.title..);       -- // Set the title
+    ScaleformMovieMethodAddParamTextureNameString(_header.title);       -- // Set the title
     ScaleformMovieMethodAddParamBool(false);        -- // purpose unknown, is always 0 in decompiled scripts.
-    ScaleformMovieMethodAddParamTextureNameString(.._header.subtitle);    --// set the subtitle.
+    ScaleformMovieMethodAddParamTextureNameString(_header.subtitle);    --// set the subtitle.
     ScaleformMovieMethodAddParamBool(false);          --// setting this to true distorts the header... for some reason. On normal MP_PAUSE menu, it makes the title a bit smaller.
     EndScaleformMovieMethod();
     Citizen.Wait(10)
@@ -215,7 +215,7 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
             ScaleformMovieMethodAddParamInt(k.online);                     -- // type (2 = AS_ONLINE_IN_SESSION)
             ScaleformMovieMethodAddParamInt(k.rank);         -- // rank value / (initialIndex 1337)
             ScaleformMovieMethodAddParamBool(false);                -- // isSelectable
-            ScaleformMovieMethodAddParamTextureNameString("<font face='$Font2'>"..k.name.."<font face>");    --  // playerName
+            ScaleformMovieMethodAddParamTextureNameString("<font face='$Font2'>"..k.name.."<font>");    --  // playerName
             ScaleformMovieMethodAddParamInt(k.rowColor);     --  // rowColor
             ScaleformMovieMethodAddParamBool(k.online);               --  // reduceColors (if true: removes color from left bar & reduces color opacity on row itself.)
             ScaleformMovieMethodAddParamInt(0);                    --  // unused
@@ -223,7 +223,7 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
             ScaleformMovieMethodAddParamInt(0);                    --  // unused
             ScaleformMovieMethodAddParamTextureNameString(--[[$"..+{pr.CrewTag}"]]k.crew);--  // crew label text. It's either broken, or I don't know how to translate Vespura's input.
             ScaleformMovieMethodAddParamBool(false);               --  // should be a thing to toggle blinking of (kick) icon, but doesn't seem to work.
-            ScaleformMovieMethodAddParamTextureNameString("<font face='$Font2'>"..k.status.."<font face>");          -- // badge/status tag text
+            ScaleformMovieMethodAddParamTextureNameString("<font face='$Font2'>"..k.status.."<font>");          -- // badge/status tag text
             ScaleformMovieMethodAddParamInt(k.statusColor);   -- // badge/status tag background color
             EndScaleformMovieMethod();
         end
