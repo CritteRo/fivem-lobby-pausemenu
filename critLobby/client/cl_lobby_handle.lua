@@ -28,7 +28,7 @@ menuList = {
             apValue = 0
         },
         ['buttons'] = {
-            [0] = {text = "Button 1", RockStarLogo = "1", rightText = "3", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
+            [0] = {text = "Button 1", type = 1, RockStarLogo = "1", rightText = "3", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
         },
         ['players'] = {
             [0] = {name = "CritteR", crew = "ADM", status = "ADMIN", icon = 65, rank = 60, online = false, rowColor = 11, statusColor = 8},
@@ -46,7 +46,7 @@ AddEventHandler('lobbymenu:CreateMenu', function(_id, _title, _subtitle, _menuHe
         ['header'] = {title = _title, subtitle = _subtitle, showPlayerCard = true, showHeaderStrip = true, headerColor = 2, colorStrip = 8, menuHeaderText = _menuHeaderText, menuHeaderAlert = "", playerHeaderText = _playerHeaderText, playerHeaderAlert = "", detailsHeaderText = _detailsHeaderText, detailsHeaderAlert = ""},
         ['details'] = {detailsTitle = "", showWarning = false, showTextBoxToColumn = 0, warningTitle = "", warningText = "", warningRightText = "", textureDirectory = '', textureName = ''},
         ['buttons'] = {
-            [0] = {text = "internal_button_dont_render", RockStarLogo = "", rightText = "", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
+            [0] = {text = "internal_button_dont_render", type = 1, RockStarLogo = "", rightText = "", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
         },
         ['players'] = {
             [0] = {name = "internal_player_dont_render", crew = "", status = "", icon = 65, rank = 1, online = false, rowColor = 11, statusColor = 8},
@@ -131,14 +131,14 @@ AddEventHandler('lobbymenu:SetDetailsCashRPandAP', function(_id, _cashValue, _rp
 end)
 
 
-AddEventHandler('lobbymenu:AddButton', function(_id, _buttonParams, _text, _rightText, _showRockStarSymbol, _rightSymbol, _buttonEvent)
+AddEventHandler('lobbymenu:AddButton', function(_id, _type, _buttonParams, _text, _rightText, _showRockStarSymbol, _rightSymbol, _buttonEvent)
     if menuList[_id] ~= nil then
         local rplus = ""
         if _showRockStarSymbol == true then
             rplus = "1"
         end
         local row = #menuList[_id]['buttons']+1
-        menuList[_id]['buttons'][row] = {text = _text, RockStarLogo = rplus, rightText = _rightText, symbol = _rightSymbol, buttonParams = _buttonParams, event = _buttonEvent}
+        menuList[_id]['buttons'][row] = {text = _text, type = _type, RockStarLogo = rplus, rightText = _rightText, symbol = _rightSymbol, buttonParams = _buttonParams, event = _buttonEvent}
         --print(row)
     else
         print('-=[[ :: WARNING :: YOU TRIED TO ADD A BUTTON FOR A NON-EXISTENT MENU ID :: ]]=-')
@@ -148,7 +148,7 @@ end)
 AddEventHandler('lobbymenu:ResetButtonList', function(_id)
     if menuList[_id] ~= nil then
         menuList[_id]['buttons'] = {
-            [0] = {text = "internal_button_dont_render", RockStarLogo = "", rightText = "", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
+            [0] = {text = "internal_button_dont_render", type = 1, RockStarLogo = "", rightText = "", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
         }
     else
         print('-=[[ :: WARNING :: YOU TRIED TO RESET THE BUTTON LIST FOR A NON-EXISTENT MENU ID :: ]]=-')

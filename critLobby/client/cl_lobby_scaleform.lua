@@ -110,7 +110,7 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
             ScaleformMovieMethodAddParamInt(i-1); --// index
             ScaleformMovieMethodAddParamInt(0); --// menu ID 0
             ScaleformMovieMethodAddParamInt(i); --// unique ID 0
-            ScaleformMovieMethodAddParamInt(1); --// type 0
+            ScaleformMovieMethodAddParamInt(k.type); --// type 0
             ScaleformMovieMethodAddParamInt(0); --// initialIndex 0
             ScaleformMovieMethodAddParamBool(true); --// isSelectable true
             ScaleformMovieMethodAddParamTextureNameString(k.text); -- left side text

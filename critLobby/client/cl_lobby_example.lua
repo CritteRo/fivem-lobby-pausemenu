@@ -4,10 +4,10 @@ TriggerEvent('lobbymenu:CreateMenu', 'critMenu.ExampleMenu', "Test Lobby Menu", 
 TriggerEvent('lobbymenu:SetHeaderDetails', 'critMenu.ExampleMenu', true, true, 2, 6)
 TriggerEvent('lobbymenu:SetDetailsTitle', 'critMenu.ExampleMenu', "Details Title", 'sproffroad', 'spr_offroad_3')
 
-TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {}, "Button 1", "", false, 0, "lobby.AddPlayerToMenu")
-TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {}, "Button 2", "", false, 0, "lobby.AddDetailsToMenu")
-TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {}, "Button 3", "", false, 0, "lobby.AddWarningToMenu")
-TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {id = 0, text = "Button Used"}, "Close Menu", "", false, 0, "lobbymenu:CloseMenu")
+TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', 1, {}, "Button 1", "", false, 0, "lobby.AddPlayerToMenu")
+TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', 1, {}, "Button 2", "", false, 0, "lobby.AddDetailsToMenu")
+TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', 1, {}, "Button 3", "", false, 0, "lobby.AddWarningToMenu")
+TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', 1, {id = 0, text = "Button Used"}, "Close Menu", "", false, 0, "lobbymenu:CloseMenu")
 
 TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "CritteR", '', "ADMIN", 65, 1, true, 12, 6)
 TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "NTT", '', "", 65, 2, true, 12, 6)
