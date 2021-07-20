@@ -274,6 +274,85 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     SetPauseMenuPedSleepState(true)]]
 end
 
+function updateButtonScaleform(_buttons)
+    for i,k in pairs(_buttons) do
+        if i>0 then
+            BeginScaleformMovieMethodOnFrontend("UPDATE_SLOT");
+            ScaleformMovieMethodAddParamInt(0); --// column
+            ScaleformMovieMethodAddParamInt(i-1); --// index
+            ScaleformMovieMethodAddParamInt(0); --// menu ID 0
+            ScaleformMovieMethodAddParamInt(i); --// unique ID 0
+            ScaleformMovieMethodAddParamInt(1); --// type 0
+            ScaleformMovieMethodAddParamInt(0); --// initialIndex 0
+            ScaleformMovieMethodAddParamBool(true); --// isSelectable true
+            ScaleformMovieMethodAddParamTextureNameString(k.text); -- left side text
+            ScaleformMovieMethodAddParamTextureNameString(k.RockStarLogo); --Setting this as a number string will show the Rockstar logo on the button.
+            ScaleformMovieMethodAddParamInt(k.symbol); --0 = shows raw rightText. 1 = Star symbol, 2 = skull, 3 = race flag, 4 = shield with cross(TDM?), 5 = multiple skulls, 6 - blank, 7 = castle, 9 = parachute, 10 = car with explosion.
+            ScaleformMovieMethodAddParamTextureNameString(k.rightText);
+            ScaleformMovieMethodAddParamInt(0);
+            ScaleformMovieMethodAddParamBool(true);
+            EndScaleformMovieMethod();
+        end
+    end
+end
+
+function updatePlayersScaleform(_players, _details)
+    if _details.showTextBoxToColumn == 0 or _details.showTextBoxToColumn == 2 then
+        --[[  PLAYERS  ]]--
+        for i,k in pairs(_players) do
+            if i > 0 then
+                BeginScaleformMovieMethodOnFrontend("UPDATE_SLOT");                   --// call scaleform function
+                ScaleformMovieMethodAddParamInt(3);                      --// frontend menu column
+                ScaleformMovieMethodAddParamInt(i-1);                      --// row index
+                ScaleformMovieMethodAddParamInt(0);                     -- // menu ID
+                ScaleformMovieMethodAddParamInt(i);                     -- // unique ID
+                ScaleformMovieMethodAddParamInt(k.online);                     -- // type (2 = AS_ONLINE_IN_SESSION)
+                ScaleformMovieMethodAddParamInt(k.rank);         -- // rank value / (initialIndex 1337)
+                ScaleformMovieMethodAddParamBool(false);                -- // isSelectable
+                ScaleformMovieMethodAddParamTextureNameString(k.name);    --  // playerName
+                ScaleformMovieMethodAddParamInt(k.rowColor);     --  // rowColor
+                ScaleformMovieMethodAddParamBool(k.online);               --  // reduceColors (if true: removes color from left bar & reduces color opacity on row itself.)
+                ScaleformMovieMethodAddParamInt(0);                    --  // unused
+                ScaleformMovieMethodAddParamInt(k.icon);         --  // right player icon.
+                ScaleformMovieMethodAddParamInt(0);                    --  // unused
+                ScaleformMovieMethodAddParamTextureNameString(--[[$"..+{pr.CrewTag}"]]k.crew);--  // crew label text. It's either broken, or I don't know how to translate Vespura's input.
+                ScaleformMovieMethodAddParamBool(false);               --  // should be a thing to toggle blinking of (kick) icon, but doesn't seem to work.
+                ScaleformMovieMethodAddParamTextureNameString(k.status);          -- // badge/status tag text
+                ScaleformMovieMethodAddParamInt(k.statusColor);   -- // badge/status tag background color
+                EndScaleformMovieMethod();
+            end
+        end
+    end
+end
+
+function updateDetailsScaleform(_details,_rowDetails)
+    if _details.showTextBoxToColumn == 0 or _details.showTextBoxToColumn == 1 then
+        --[[  SET DETAILS ROWS ]]--
+        for i,k in pairs(_rowDetails) do
+            if i > 0 then
+                BeginScaleformMovieMethodOnFrontend("UPDATE_SLOT");
+                ScaleformMovieMethodAddParamInt(1); --// column
+                ScaleformMovieMethodAddParamInt(i-1); --// index
+                ScaleformMovieMethodAddParamInt(0); --// menu ID 0
+                ScaleformMovieMethodAddParamInt(i); --// unique ID 0
+                ScaleformMovieMethodAddParamInt(1); --// type 0
+                ScaleformMovieMethodAddParamInt(0); --// initialIndex 0
+                ScaleformMovieMethodAddParamBool(false); --// isSelectable true
+                ScaleformMovieMethodAddParamTextureNameString(k.text);
+                ScaleformMovieMethodAddParamTextureNameString(k.rightText); --Right Text
+                --///// UNSURE HOW THIS WORKS, BUT IF YOU UNCOMMENT THIS, IT'LL ADD AN ICON TO THE ROW.
+                --///// MAKING THE STRING "20" AND THE BOOL TRUE SEEMS TO DO SOMETHING WITH A ROCKSTAR LOGO INSTEAD.
+                --CritteR's note: I don't think the rockstar stuff works here.
+                --ScaleformMovieMethodAddParamInt(0);
+                --ScaleformMovieMethodAddParamTextureNameString("20");
+                --ScaleformMovieMethodAddParamInt(0);
+                --ScaleformMovieMethodAddParamBool(true); --// SOMETHING WITH ROCKSTAR/STAR LOGO SWITCHING.
+                EndScaleformMovieMethod();
+            end
+        end
+    end
+end
+
 
 
 --[[Citizen.CreateThread(function()
