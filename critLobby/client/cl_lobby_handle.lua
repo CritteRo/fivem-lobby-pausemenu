@@ -19,6 +19,7 @@ menuList = {
         ['details'] = {
             detailsTitle = "Details title",
             showWarning = false,
+            showTextBoxToColumn = 0, --0 = disabled. 1 = player column. 2 = details column, 3 = both columns.
             warningTitle = "Warning",
             warningText = "Warning Text",
             warningRightText = "Right",
@@ -43,7 +44,7 @@ openedMenu = "lobbymenu:internalmenu:please_never_use_this_in_your_code"
 AddEventHandler('lobbymenu:CreateMenu', function(_id, _title, _subtitle, _menuHeaderText, _playerHeaderText, _detailsHeaderText)
     menuList[_id] = {
         ['header'] = {title = _title, subtitle = _subtitle, showPlayerCard = true, showHeaderStrip = true, headerColor = 2, colorStrip = 8, menuHeaderText = _menuHeaderText, menuHeaderAlert = "", playerHeaderText = _playerHeaderText, playerHeaderAlert = "", detailsHeaderText = _detailsHeaderText, detailsHeaderAlert = ""},
-        ['details'] = {detailsTitle = "", showWarning = false, warningTitle = "", warningText = "", warningRightText = "", textureDirectory = '', textureName = ''},
+        ['details'] = {detailsTitle = "", showWarning = false, showTextBoxToColumn = 0, warningTitle = "", warningText = "", warningRightText = "", textureDirectory = '', textureName = ''},
         ['buttons'] = {
             [0] = {text = "internal_button_dont_render", RockStarLogo = "", rightText = "", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
         },
@@ -91,6 +92,21 @@ AddEventHandler('lobbymenu:SetWarningMessage', function(_id, _showWarning, _warn
         menuList[_id]['details'].warningRightText = _warningRightText
     else
         print('-=[[ :: WARNING :: YOU TRIED TO SET A WARNING MESSAGE FOR A NON-EXISTENT MENU ID :: ]]=-')
+    end
+end)
+
+AddEventHandler('lobbymenu:SetTextBoxToColumn', function(_id, _column, _warningTitle, _warningText, _warningFooter)
+    if menuList[_id] ~= nil then
+        if tonumber(_column) >= 0 and tonumber(_column) < 4 then
+            menuList[_id]['details'].showTextBoxToColumn = _column
+            menuList[_id]['details'].warningTitle = _warningTitle
+            menuList[_id]['details'].warningText = _warningText
+            menuList[_id]['details'].warningRightText = _warningFooter
+        else
+            print('-=[[ :: WARNING :: YOU TRIED TO SET AN INVALID COLUMN FOR TEXT BOX :: ]]=-')
+        end 
+    else
+        print('-=[[ :: WARNING :: YOU TRIED TO SET A TEXT BOX MESSAGE FOR A NON-EXISTENT MENU ID :: ]]=-')
     end
 end)
 

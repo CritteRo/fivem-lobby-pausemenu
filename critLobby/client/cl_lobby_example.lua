@@ -9,13 +9,14 @@ TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {}, "Add Details Row
 TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {}, "Add Warning", "", false, 0, "lobby.AddWarningToMenu")
 TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {id = 0, text = "Button Used"}, "Close Menu", "", false, 0, "lobbymenu:CloseMenu")
 
+TriggerEvent('lobbymenu:SetTextBoxToColumn', 'critMenu.ExampleMenu', 3, "Title", "This is a text box. You can add as much text as you want here and no one will care.\n\n~y~It's great for info and stuff...~s~", "Footer text.")
 
 AddEventHandler("lobby.AddPlayerToMenu", function(_buttonParams)
     TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "CritteR", '', "ADMIN", 65, 1, true, 12, 6)
     TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "NTT", '', "", 65, 2, true, 12, 6)
     TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "Taurete", '', "", 65, 3, true, 12, 6)
     TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "TheLegend27", '', "", 65, 4, true, 12, 6)
-    TriggerEvent('lobbymenu:ReloadMenu')
+    --TriggerEvent('lobbymenu:ReloadMenu')
 end)
 
 AddEventHandler("lobby.AddDetailsToMenu", function(_buttonParams)
@@ -24,7 +25,7 @@ AddEventHandler("lobby.AddDetailsToMenu", function(_buttonParams)
     TriggerEvent('lobbymenu:AddDetailsRow', 'critMenu.ExampleMenu', "Road Type:", "Dirt")
     TriggerEvent('lobbymenu:AddDetailsRow', 'critMenu.ExampleMenu', "XP:", "~b~5000+~s~")
     TriggerEvent('lobbymenu:AddDetailsRow', 'critMenu.ExampleMenu', "Cash:", "~b~3000+~s~")
-    TriggerEvent('lobbymenu:ReloadMenu')
+    --TriggerEvent('lobbymenu:ReloadMenu')
 end)
 
 AddEventHandler("lobby.AddWarningToMenu", function(_buttonParams)

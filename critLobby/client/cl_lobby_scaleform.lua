@@ -128,112 +128,131 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     ScaleformMovieMethodAddParamInt(0); --column
     EndScaleformMovieMethod();
 
-
-    --[[  DETAILS STUFF  ]]--
-
-    BeginScaleformMovieMethodOnFrontend("SET_COLUMN_TITLE");
-    ScaleformMovieMethodAddParamInt(1); --// some sort of type. Using 1 lets you create Title card.
-    ScaleformMovieMethodAddParamTextureNameString(""); --when "type is 2", this is a column header.
-    ScaleformMovieMethodAddParamTextureNameString(_details.detailsTitle); --when "type is 2", this is a left side text. If it's 1, then it's the title
-    ScaleformMovieMethodAddParamTextureNameString(""); --when "type is 2", this is right text.
-    ScaleformMovieMethodAddParamTextureNameString(_details.textureDirectory); --TextureDirectory for column img
-    ScaleformMovieMethodAddParamTextureNameString(_details.textureName);  --TextureName for column img
-    ScaleformMovieMethodAddParamInt(1); --// idk, unused?
-    ScaleformMovieMethodAddParamInt(2) --setting this to 1, makes the img squashed.
-    ScaleformMovieMethodAddParamTextureNameString(_details.rpValue) --RP value
-    ScaleformMovieMethodAddParamTextureNameString(_details.cashValue) --Cash value
-    ScaleformMovieMethodAddParamTextureNameString(_details.apValue) --Ap value
-    EndScaleformMovieMethod();
-
-    BeginScaleformMovieMethodOnFrontend("ADD_TXD_REF_RESPONSE"); --not working btw
-    ScaleformMovieMethodAddParamTextureNameString(_details.textureDirectory); --when "type is 2", this is a left side text. If it's 1, then it's the title
-    ScaleformMovieMethodAddParamTextureNameString(_details.textureName); --when "type is 2", this is right text.
-    ScaleformMovieMethodAddParamInt(0);
-    EndScaleformMovieMethod();
-
     --[[ :: This is the big reclange that you can find on Pause Menu at Notifications or Jobs, basically a big text box with R* background :: ]]--
-    --[[BeginScaleformMovieMethodOnFrontend("SHOW_WARNING_MESSAGE");
-    ScaleformMovieMethodAddParamInt(1);
-    ScaleformMovieMethodAddParamInt(1);
-    ScaleformMovieMethodAddParamInt(2);
-    ScaleformMovieMethodAddParamTextureNameString('test');
-    ScaleformMovieMethodAddParamTextureNameString('test2');
-    ScaleformMovieMethodAddParamInt(0);
-    ScaleformMovieMethodAddParamTextureNameString('spcityraces'); --when "type is 2", this is a left side text. If it's 1, then it's the title
-    ScaleformMovieMethodAddParamTextureNameString('airport'); --when "type is 2", this is right text.
-    ScaleformMovieMethodAddParamInt(0);
-    ScaleformMovieMethodAddParamTextureNameString('test2');
-    ScaleformMovieMethodAddParamInt(0);
-    EndScaleformMovieMethod();]]
+    if _details.showTextBoxToColumn ~= 0 and _details.showTextBoxToColumn < 4 then
+        BeginScaleformMovieMethodOnFrontend("SHOW_WARNING_MESSAGE");
+        ScaleformMovieMethodAddParamInt(1); --showToggle
+        if _details.showTextBoxToColumn < 3 then
+            ScaleformMovieMethodAddParamInt(_details.showTextBoxToColumn); --column from where to start.
+            ScaleformMovieMethodAddParamInt(1); --columns to cover.
+        elseif _details.showTextBoxToColumn == 3 then
+            ScaleformMovieMethodAddParamInt(1); --column from where to start.
+            ScaleformMovieMethodAddParamInt(2); --columns to cover.
+        end
+        ScaleformMovieMethodAddParamTextureNameString(_details.warningText); --body String.
+        ScaleformMovieMethodAddParamTextureNameString(_details.warningTitle); --title String.
+        ScaleformMovieMethodAddParamInt(0); --background height?
+        ScaleformMovieMethodAddParamTextureNameString(''); --textureDictionary
+        ScaleformMovieMethodAddParamTextureNameString(''); --textureName
+        ScaleformMovieMethodAddParamInt(0); --image Alignment. (Probably justify. 0 = left)
+        ScaleformMovieMethodAddParamTextureNameString(_details.warningRightText); --footer String.
+        ScaleformMovieMethodAddParamInt(0); --request background texture.
+        EndScaleformMovieMethod()
+        Citizen.Wait(10)
 
-    if _details.showWarning then
+        if _details.showTextBoxToColumn == 3 then
+            BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_HEADER_TEXT_BY_INDEX") --Changes the column header text
+            ScaleformMovieMethodAddParamInt(1); --// columnID. Starts at 0
+            ScaleformMovieMethodAddParamTextureNameString(_header.detailsHeaderText)
+            ScaleformMovieMethodAddParamInt(2); --// Column width. 1 = default / 100%
+            ScaleformMovieMethodAddParamBool(false); --forceUpper...don't really know what it does. Setting it to true will hide? the column text
+            EndScaleformMovieMethodReturnValue()
+            Citizen.Wait(10)
+        end
+    end
+
+    if _details.showTextBoxToColumn == 0 or _details.showTextBoxToColumn == 1 then
+        --[[  DETAILS STUFF  ]]--
         BeginScaleformMovieMethodOnFrontend("SET_COLUMN_TITLE");
-        ScaleformMovieMethodAddParamInt(2); --// some sort of type. Using 1 lets you create Title card. type 2 = warning/alert/error tile below the column.
-        ScaleformMovieMethodAddParamTextureNameString(_details.warningTitle); --when "type is 2", this is a column header.
-        ScaleformMovieMethodAddParamTextureNameString(_details.warningText); --when "type is 2", this is a left side text. If it's 1, then it's the title
-        ScaleformMovieMethodAddParamTextureNameString(_details.warningRightText); --when "type is 2", this is right text.
+        ScaleformMovieMethodAddParamInt(1); --// some sort of type. Using 1 lets you create Title card.
+        ScaleformMovieMethodAddParamTextureNameString(""); --when "type is 2", this is a column header.
+        ScaleformMovieMethodAddParamTextureNameString(_details.detailsTitle); --when "type is 2", this is a left side text. If it's 1, then it's the title
+        ScaleformMovieMethodAddParamTextureNameString(""); --when "type is 2", this is right text.
+        ScaleformMovieMethodAddParamTextureNameString(_details.textureDirectory); --TextureDirectory for column img
+        ScaleformMovieMethodAddParamTextureNameString(_details.textureName);  --TextureName for column img
+        ScaleformMovieMethodAddParamInt(1); --// idk, unused?
+        ScaleformMovieMethodAddParamInt(2) --setting this to 1, makes the img squashed.
+        ScaleformMovieMethodAddParamTextureNameString(_details.rpValue) --RP value
+        ScaleformMovieMethodAddParamTextureNameString(_details.cashValue) --Cash value
+        ScaleformMovieMethodAddParamTextureNameString(_details.apValue) --Ap value
+        EndScaleformMovieMethod();
+
+        BeginScaleformMovieMethodOnFrontend("ADD_TXD_REF_RESPONSE"); --not working btw
+        ScaleformMovieMethodAddParamTextureNameString(_details.textureDirectory); --when "type is 2", this is a left side text. If it's 1, then it's the title
+        ScaleformMovieMethodAddParamTextureNameString(_details.textureName); --when "type is 2", this is right text.
+        ScaleformMovieMethodAddParamInt(0);
+        EndScaleformMovieMethod();
+
+        if _details.showWarning then
+            BeginScaleformMovieMethodOnFrontend("SET_COLUMN_TITLE");
+            ScaleformMovieMethodAddParamInt(2); --// some sort of type. Using 1 lets you create Title card. type 2 = warning/alert/error tile below the column.
+            ScaleformMovieMethodAddParamTextureNameString(_details.warningTitle); --when "type is 2", this is a column header.
+            ScaleformMovieMethodAddParamTextureNameString(_details.warningText); --when "type is 2", this is a left side text. If it's 1, then it's the title
+            ScaleformMovieMethodAddParamTextureNameString(_details.warningRightText); --when "type is 2", this is right text.
+            EndScaleformMovieMethod();
+        end
+
+        --[[  SET DETAILS ROWS ]]--
+        for i,k in pairs(_rowDetails) do
+            if i > 0 then
+                BeginScaleformMovieMethodOnFrontend("SET_DATA_SLOT");
+                ScaleformMovieMethodAddParamInt(1); --// column
+                ScaleformMovieMethodAddParamInt(i-1); --// index
+                ScaleformMovieMethodAddParamInt(0); --// menu ID 0
+                ScaleformMovieMethodAddParamInt(i); --// unique ID 0
+                ScaleformMovieMethodAddParamInt(1); --// type 0
+                ScaleformMovieMethodAddParamInt(0); --// initialIndex 0
+                ScaleformMovieMethodAddParamBool(false); --// isSelectable true
+                ScaleformMovieMethodAddParamTextureNameString(k.text);
+                ScaleformMovieMethodAddParamTextureNameString(k.rightText); --Right Text
+                --///// UNSURE HOW THIS WORKS, BUT IF YOU UNCOMMENT THIS, IT'LL ADD AN ICON TO THE ROW.
+                --///// MAKING THE STRING "20" AND THE BOOL TRUE SEEMS TO DO SOMETHING WITH A ROCKSTAR LOGO INSTEAD.
+                --CritteR's note: I don't think the rockstar stuff works here.
+                --ScaleformMovieMethodAddParamInt(0);
+                --ScaleformMovieMethodAddParamTextureNameString("20");
+                --ScaleformMovieMethodAddParamInt(0);
+                --ScaleformMovieMethodAddParamBool(true); --// SOMETHING WITH ROCKSTAR/STAR LOGO SWITCHING.
+                EndScaleformMovieMethod();
+            end
+        end
+
+        Citizen.Wait(10)
+        BeginScaleformMovieMethodOnFrontend("DISPLAY_DATA_SLOT");
+        ScaleformMovieMethodAddParamInt(1);
         EndScaleformMovieMethod();
     end
 
-    --[[  SET DETAILS ROWS ]]--
-    for i,k in pairs(_rowDetails) do
-        if i > 0 then
-            BeginScaleformMovieMethodOnFrontend("SET_DATA_SLOT");
-            ScaleformMovieMethodAddParamInt(1); --// column
-            ScaleformMovieMethodAddParamInt(i-1); --// index
-            ScaleformMovieMethodAddParamInt(0); --// menu ID 0
-            ScaleformMovieMethodAddParamInt(i); --// unique ID 0
-            ScaleformMovieMethodAddParamInt(1); --// type 0
-            ScaleformMovieMethodAddParamInt(0); --// initialIndex 0
-            ScaleformMovieMethodAddParamBool(false); --// isSelectable true
-            ScaleformMovieMethodAddParamTextureNameString(k.text);
-            ScaleformMovieMethodAddParamTextureNameString(k.rightText); --Right Text
-            --///// UNSURE HOW THIS WORKS, BUT IF YOU UNCOMMENT THIS, IT'LL ADD AN ICON TO THE ROW.
-            --///// MAKING THE STRING "20" AND THE BOOL TRUE SEEMS TO DO SOMETHING WITH A ROCKSTAR LOGO INSTEAD.
-            --CritteR's note: I don't think the rockstar stuff works here.
-            --ScaleformMovieMethodAddParamInt(0);
-            --ScaleformMovieMethodAddParamTextureNameString("20");
-            --ScaleformMovieMethodAddParamInt(0);
-            --ScaleformMovieMethodAddParamBool(true); --// SOMETHING WITH ROCKSTAR/STAR LOGO SWITCHING.
-            EndScaleformMovieMethod();
+    if _details.showTextBoxToColumn == 0 or _details.showTextBoxToColumn == 2 then
+        --[[  PLAYERS  ]]--
+        for i,k in pairs(_players) do
+            if i > 0 then
+                BeginScaleformMovieMethodOnFrontend("SET_DATA_SLOT");                   --// call scaleform function
+                ScaleformMovieMethodAddParamInt(3);                      --// frontend menu column
+                ScaleformMovieMethodAddParamInt(i-1);                      --// row index
+                ScaleformMovieMethodAddParamInt(0);                     -- // menu ID
+                ScaleformMovieMethodAddParamInt(i);                     -- // unique ID
+                ScaleformMovieMethodAddParamInt(k.online);                     -- // type (2 = AS_ONLINE_IN_SESSION)
+                ScaleformMovieMethodAddParamInt(k.rank);         -- // rank value / (initialIndex 1337)
+                ScaleformMovieMethodAddParamBool(false);                -- // isSelectable
+                ScaleformMovieMethodAddParamTextureNameString(k.name);    --  // playerName
+                ScaleformMovieMethodAddParamInt(k.rowColor);     --  // rowColor
+                ScaleformMovieMethodAddParamBool(k.online);               --  // reduceColors (if true: removes color from left bar & reduces color opacity on row itself.)
+                ScaleformMovieMethodAddParamInt(0);                    --  // unused
+                ScaleformMovieMethodAddParamInt(k.icon);         --  // right player icon.
+                ScaleformMovieMethodAddParamInt(0);                    --  // unused
+                ScaleformMovieMethodAddParamTextureNameString(--[[$"..+{pr.CrewTag}"]]k.crew);--  // crew label text. It's either broken, or I don't know how to translate Vespura's input.
+                ScaleformMovieMethodAddParamBool(false);               --  // should be a thing to toggle blinking of (kick) icon, but doesn't seem to work.
+                ScaleformMovieMethodAddParamTextureNameString(k.status);          -- // badge/status tag text
+                ScaleformMovieMethodAddParamInt(k.statusColor);   -- // badge/status tag background color
+                EndScaleformMovieMethod();
+            end
         end
+
+        Citizen.Wait(10)
+        BeginScaleformMovieMethodOnFrontend("DISPLAY_DATA_SLOT");
+        ScaleformMovieMethodAddParamInt(3);
+        EndScaleformMovieMethod();
     end
-
-    Citizen.Wait(10)
-    BeginScaleformMovieMethodOnFrontend("DISPLAY_DATA_SLOT");
-    ScaleformMovieMethodAddParamInt(1);
-    EndScaleformMovieMethod();
-
-    --[[  PLAYERS  ]]--
-    for i,k in pairs(_players) do
-        if i > 0 then
-            BeginScaleformMovieMethodOnFrontend("SET_DATA_SLOT");                   --// call scaleform function
-            ScaleformMovieMethodAddParamInt(3);                      --// frontend menu column
-            ScaleformMovieMethodAddParamInt(i-1);                      --// row index
-            ScaleformMovieMethodAddParamInt(0);                     -- // menu ID
-            ScaleformMovieMethodAddParamInt(i);                     -- // unique ID
-            ScaleformMovieMethodAddParamInt(k.online);                     -- // type (2 = AS_ONLINE_IN_SESSION)
-            ScaleformMovieMethodAddParamInt(k.rank);         -- // rank value / (initialIndex 1337)
-            ScaleformMovieMethodAddParamBool(false);                -- // isSelectable
-            ScaleformMovieMethodAddParamTextureNameString(k.name);    --  // playerName
-            ScaleformMovieMethodAddParamInt(k.rowColor);     --  // rowColor
-            ScaleformMovieMethodAddParamBool(k.online);               --  // reduceColors (if true: removes color from left bar & reduces color opacity on row itself.)
-            ScaleformMovieMethodAddParamInt(0);                    --  // unused
-            ScaleformMovieMethodAddParamInt(k.icon);         --  // right player icon.
-            ScaleformMovieMethodAddParamInt(0);                    --  // unused
-            ScaleformMovieMethodAddParamTextureNameString(--[[$"..+{pr.CrewTag}"]]k.crew);--  // crew label text. It's either broken, or I don't know how to translate Vespura's input.
-            ScaleformMovieMethodAddParamBool(false);               --  // should be a thing to toggle blinking of (kick) icon, but doesn't seem to work.
-            ScaleformMovieMethodAddParamTextureNameString(k.status);          -- // badge/status tag text
-            ScaleformMovieMethodAddParamInt(k.statusColor);   -- // badge/status tag background color
-            EndScaleformMovieMethod();
-        end
-    end
-    
-
-    Citizen.Wait(10)
-    BeginScaleformMovieMethodOnFrontend("DISPLAY_DATA_SLOT");
-    ScaleformMovieMethodAddParamInt(3);
-    EndScaleformMovieMethod();
 
     Citizen.Wait(10)
 
