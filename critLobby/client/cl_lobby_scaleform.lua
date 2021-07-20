@@ -110,8 +110,8 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
             ScaleformMovieMethodAddParamInt(i-1); --// index
             ScaleformMovieMethodAddParamInt(0); --// menu ID 0
             ScaleformMovieMethodAddParamInt(i); --// unique ID 0
-            ScaleformMovieMethodAddParamInt(k.type); --// type 0
-            ScaleformMovieMethodAddParamInt(0); --// initialIndex 0
+            ScaleformMovieMethodAddParamInt(k.type); --// type 0 -- This makes the button a list button, normal one, a weird bar one which is probably stats, etc.
+            ScaleformMovieMethodAddParamInt(0); --// initialIndex 0 -- this adds a background pill on the right text, kinda like player status. 0 = disabled. 1 to..maybe 200+ are colors. Probably the same as the ones in notes.lua
             ScaleformMovieMethodAddParamBool(true); --// isSelectable true
             ScaleformMovieMethodAddParamTextureNameString(k.text); -- left side text
             ScaleformMovieMethodAddParamTextureNameString(k.RockStarLogo); --Setting this as a number string will show the Rockstar logo on the button.
