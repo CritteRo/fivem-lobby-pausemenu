@@ -10,6 +10,11 @@ client_scripts {
     'client/cl_lobby_example.lua',
 }
 
+exports {
+    "LobbyMenu.GetActiveMenu",
+    "LobbyMenu.GetSelectedButtonParam"
+}
+
 files {
     --'runtime.png',
 }

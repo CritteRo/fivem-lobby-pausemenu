@@ -222,15 +222,38 @@ AddEventHandler('lobbymenu:ReloadMenu', function()
     end
 end)
 
-AddEventHandler('lobbymenu:UpdateMenu', function()
-    if menuList[openedMenu] ~= nil then
-        updateDetailsScaleform(menuList[openedMenu]['details'], menuList[openedMenu]['rowDetails'])
-        updateButtonScaleform(menuList[openedMenu]['buttons'])
-        updatePlayersScaleform(menuList[openedMenu]['players'], menuList[openedMenu]['details'])
+AddEventHandler('lobbymenu:UpdateMenu', function(_id)
+    if menuList[_id] ~= nil then
+        updateDetailsScaleform(menuList[_id]['details'], menuList[_id]['rowDetails'])
+        updateButtonScaleform(menuList[_id]['buttons'])
+        updatePlayersScaleform(menuList[_id]['players'], menuList[_id]['details'])
     else
-        print('-=[[ :: WARNING :: THERE ARE NO ACTIVE MENUS :: ]]=-')
+        print('-=[[ :: WARNING :: YOU TRIED TO UPDATE A NON-EXISTENT MENU ID :: ]]=-')
     end
 end)
+
+function LobbyMenuGetActiveMenu()
+    local menu = nil
+    if openedMenu ~= "lobbymenu:internalmenu:please_never_use_this_in_your_code" then
+        menu = openedMenu
+    end
+    return menu
+end
+
+function LobbyMenuGetSelectedButtonParam()
+    local buttonParams = nil
+    local buttonText = nil
+    local last, current = GetPauseMenuSelection()
+    local menu = nil
+    if openedMenu ~= "lobbymenu:internalmenu:please_never_use_this_in_your_code" then
+        menu = openedMenu
+        if menuList[menu]['buttons'][current] ~= nil then
+            buttonParams = menuList[menu]['buttons'][current].buttonParams
+            buttonText = menuList[menu]['buttons'][current].text
+        end
+    end
+    return current, buttonText, buttonParams
+end
 
 AddEventHandler('lobbymenu:CloseMenu', function()
     if GetCurrentFrontendMenuVersion() == GetHashKey("FE_MENU_VERSION_CORONA") then
@@ -243,10 +266,7 @@ end)
 
 RegisterCommand('lobbymenu:closemenu:cmd', function()
     if GetCurrentFrontendMenuVersion() == GetHashKey("FE_MENU_VERSION_CORONA") then
-        SetFrontendActive(false)
-        TriggerScreenblurFadeOut(1000)--screen blur
-        PlaySoundFrontend(-1, "QUIT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
-        BusyspinnerOff()
+        TriggerEvent('lobbymenu:CloseMenu')
     end
 end)
 
