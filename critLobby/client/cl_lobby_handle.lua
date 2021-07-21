@@ -211,9 +211,22 @@ AddEventHandler('lobbymenu:ReloadMenu', function()
         if _blurredBackground ~= nil and _blurredBackground == true then
             TriggerScreenblurFadeIn(1000) --screen blur
         end
+        --updateDetailsScaleform(menuList[openedMenu]['details'], menuList[openedMenu]['rowDetails'])
+        --updateButtonScaleform(menuList[openedMenu]['buttons'])
+        --updatePlayersScaleform(menuList[openedMenu]['players'], menuList[openedMenu]['details'])
         RestartFrontendMenu("FE_MENU_VERSION_CORONA", -1)
         Citizen.Wait(100)
         generateLobbyScaleform(menuList[openedMenu]['header'], menuList[openedMenu]['buttons'], menuList[openedMenu]['players'], menuList[openedMenu]['details'], menuList[openedMenu]['rowDetails'])
+    else
+        print('-=[[ :: WARNING :: THERE ARE NO ACTIVE MENUS :: ]]=-')
+    end
+end)
+
+AddEventHandler('lobbymenu:UpdateMenu', function()
+    if menuList[openedMenu] ~= nil then
+        updateDetailsScaleform(menuList[openedMenu]['details'], menuList[openedMenu]['rowDetails'])
+        updateButtonScaleform(menuList[openedMenu]['buttons'])
+        updatePlayersScaleform(menuList[openedMenu]['players'], menuList[openedMenu]['details'])
     else
         print('-=[[ :: WARNING :: THERE ARE NO ACTIVE MENUS :: ]]=-')
     end
