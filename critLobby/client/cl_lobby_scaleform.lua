@@ -117,9 +117,25 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
             ScaleformMovieMethodAddParamTextureNameString(k.RockStarLogo); --Setting this as a number string will show the Rockstar logo on the button.
             ScaleformMovieMethodAddParamInt(k.symbol); --0 = shows raw rightText. 1 = Star symbol, 2 = skull, 3 = race flag, 4 = shield with cross(TDM?), 5 = multiple skulls, 6 - blank, 7 = castle, 9 = parachute, 10 = car with explosion.
             ScaleformMovieMethodAddParamTextureNameString(k.rightText);
-            ScaleformMovieMethodAddParamInt(0);
-            ScaleformMovieMethodAddParamBool(true);
+            ScaleformMovieMethodAddParamInt(1); --unused?
+            ScaleformMovieMethodAddParamInt(1); --unused?
+            ScaleformMovieMethodAddParamInt(0); --This makes the first button (only the first) flicker
+            if _buttons[i+1] ~= nil then
+                ScaleformMovieMethodAddParamInt(0); --This adds the bar above the button. Does not work for first button.
+            else
+                ScaleformMovieMethodAddParamInt(1); --This adds the bar above the button. Does not work for first button.
+            end
+            ScaleformMovieMethodAddParamInt(0); --unused?
+            ScaleformMovieMethodAddParamInt(0); --"Green Checkmark" icon
             EndScaleformMovieMethod();
+
+            --[[
+            BeginScaleformMovieMethodN("SET_DESCRIPTION")
+            PushScaleformMovieFunctionParameterInt(i-1) --This is a type. 0 is tooltip bellow buttons. 3 is a loading thing on the player column.
+            PushScaleformMovieFunctionParameterString("Test description\n"..k.text.."\n"..k.rightText.."\nTest12")
+            PushScaleformMovieMethodParameterInt(0) --toggle, Info icon flashing
+            PushScaleformMovieMethodParameterInt(0) --togle, text flashing.
+            EndScaleformMovieMethod()]]
         end
     end
 

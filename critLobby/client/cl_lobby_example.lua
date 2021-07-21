@@ -9,10 +9,10 @@ TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {}, "Button 2", "", 
 TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {}, "Button 3", "", false, 0, "lobby.AddWarningToMenu")
 TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {id = 0, text = "Button Used"}, "Close Menu", "", false, 0, "lobbymenu:CloseMenu")
 
-TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "CritteR", '', "ADMIN", 65, 1, true, 12, 6)
-TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "NTT", '', "", 65, 2, true, 12, 6)
-TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "Taurete", '', "", 65, 3, true, 12, 6)
-TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "TheLegend27", '', "", 65, 4, true, 12, 6)
+--TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "CritteR", '', "ADMIN", 65, 1, true, 12, 6)
+--TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "NTT", '', "", 65, 2, true, 12, 6)
+--TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "Taurete", '', "", 65, 3, true, 12, 6)
+--TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "TheLegend27", '', "", 65, 4, true, 12, 6)
 
 TriggerEvent('lobbymenu:AddDetailsRow', 'critMenu.ExampleMenu', "Details Row 1", "~y~2 minutes~s~")
 TriggerEvent('lobbymenu:AddDetailsRow', 'critMenu.ExampleMenu', "Details Row 2", "~y~Vigero~s~")
