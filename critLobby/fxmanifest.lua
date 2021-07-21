@@ -11,8 +11,8 @@ client_scripts {
 }
 
 exports {
-    "LobbyMenu.GetActiveMenu",
-    "LobbyMenu.GetSelectedButtonParam"
+    "LobbyMenuGetActiveMenu",
+    "LobbyMenuGetSelectedButtonParam"
 }
 
 files {
