@@ -256,7 +256,7 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
                 ScaleformMovieMethodAddParamInt(0);                    --  // unused
                 ScaleformMovieMethodAddParamInt(k.icon);         --  // right player icon.
                 ScaleformMovieMethodAddParamInt(0);                    --  // unused
-                ScaleformMovieMethodAddParamTextureNameString(--[[$"..+{pr.CrewTag}"]]k.crew);--  // crew label text. It's either broken, or I don't know how to translate Vespura's input.
+                ScaleformMovieMethodAddParamTextureNameString("..+"..k.crew);--  // crew label text. It's either broken, or I don't know how to translate Vespura's input.
                 ScaleformMovieMethodAddParamBool(false);               --  // should be a thing to toggle blinking of (kick) icon, but doesn't seem to work.
                 ScaleformMovieMethodAddParamTextureNameString(k.status);          -- // badge/status tag text
                 ScaleformMovieMethodAddParamInt(k.statusColor);   -- // badge/status tag background color
