@@ -227,6 +227,7 @@ AddEventHandler('lobbymenu:UpdateMenu', function(_id)
         updateDetailsScaleform(menuList[_id]['details'], menuList[_id]['rowDetails'])
         updateButtonScaleform(menuList[_id]['buttons'])
         updatePlayersScaleform(menuList[_id]['players'], menuList[_id]['details'])
+        updateTextboxScaleform(menuList[_id]['header'], menuList[_id]['details'])
     else
         print('-=[[ :: WARNING :: YOU TRIED TO UPDATE A NON-EXISTENT MENU ID :: ]]=-')
     end

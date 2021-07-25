@@ -369,6 +369,40 @@ function updateDetailsScaleform(_details,_rowDetails)
     end
 end
 
+function updateTextboxScaleform(_header, _details)
+    if _details.showTextBoxToColumn ~= 0 and _details.showTextBoxToColumn < 4 then
+        BeginScaleformMovieMethodOnFrontend("SHOW_WARNING_MESSAGE");
+        ScaleformMovieMethodAddParamInt(1); --showToggle
+        if _details.showTextBoxToColumn < 3 then
+            ScaleformMovieMethodAddParamInt(_details.showTextBoxToColumn); --column from where to start.
+            ScaleformMovieMethodAddParamInt(1); --columns to cover.
+        elseif _details.showTextBoxToColumn == 3 then
+            ScaleformMovieMethodAddParamInt(1); --column from where to start.
+            ScaleformMovieMethodAddParamInt(2); --columns to cover.
+        end
+        ScaleformMovieMethodAddParamTextureNameString(_details.warningText); --body String.
+        ScaleformMovieMethodAddParamTextureNameString(_details.warningTitle); --title String.
+        ScaleformMovieMethodAddParamInt(0); --background height?
+        ScaleformMovieMethodAddParamTextureNameString(''); --textureDictionary
+        ScaleformMovieMethodAddParamTextureNameString(''); --textureName
+        ScaleformMovieMethodAddParamInt(0); --image Alignment. (Probably justify. 0 = left)
+        ScaleformMovieMethodAddParamTextureNameString(_details.warningRightText); --footer String.
+        ScaleformMovieMethodAddParamInt(0); --request background texture.
+        EndScaleformMovieMethod()
+        Citizen.Wait(10)
+
+        if _details.showTextBoxToColumn == 3 then
+            BeginScaleformMovieMethodOnFrontendHeader("SET_MENU_HEADER_TEXT_BY_INDEX") --Changes the column header text
+            ScaleformMovieMethodAddParamInt(1); --// columnID. Starts at 0
+            ScaleformMovieMethodAddParamTextureNameString(_header.detailsHeaderText)
+            ScaleformMovieMethodAddParamInt(2); --// Column width. 1 = default / 100%
+            ScaleformMovieMethodAddParamBool(false); --forceUpper...don't really know what it does. Setting it to true will hide? the column text
+            EndScaleformMovieMethodReturnValue()
+            Citizen.Wait(10)
+        end
+    end
+end
+
 
 
 --[[Citizen.CreateThread(function()
