@@ -23,6 +23,7 @@ menuList = {
             warningTitle = "Warning",
             warningText = "Warning Text",
             warningRightText = "Right",
+            tooltipText = "",
             cashValue = 0,
             rpValue = 0,
             apValue = 0
@@ -44,7 +45,7 @@ openedMenu = "lobbymenu:internalmenu:please_never_use_this_in_your_code"
 AddEventHandler('lobbymenu:CreateMenu', function(_id, _title, _subtitle, _menuHeaderText, _playerHeaderText, _detailsHeaderText)
     menuList[_id] = {
         ['header'] = {title = _title, subtitle = _subtitle, showPlayerCard = true, showHeaderStrip = true, headerColor = 2, colorStrip = 8, menuHeaderText = _menuHeaderText, menuHeaderAlert = "", playerHeaderText = _playerHeaderText, playerHeaderAlert = "", detailsHeaderText = _detailsHeaderText, detailsHeaderAlert = ""},
-        ['details'] = {detailsTitle = "", showWarning = false, showTextBoxToColumn = 0, warningTitle = "", warningText = "", warningRightText = "", textureDirectory = '', textureName = ''},
+        ['details'] = {detailsTitle = "", showWarning = false, showTextBoxToColumn = 0, warningTitle = "", warningText = "", warningRightText = "", tooltipText = "", textureDirectory = '', textureName = '', cashValue = 0, rpValue = 0, apValue = 0},
         ['buttons'] = {
             [0] = {text = "internal_button_dont_render", RockStarLogo = "", rightText = "", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
         },
@@ -92,6 +93,14 @@ AddEventHandler('lobbymenu:SetWarningMessage', function(_id, _showWarning, _warn
         menuList[_id]['details'].warningRightText = _warningRightText
     else
         print('-=[[ :: WARNING :: YOU TRIED TO SET A WARNING MESSAGE FOR A NON-EXISTENT MENU ID :: ]]=-')
+    end
+end)
+
+AddEventHandler('lobbymenu:SetTooltipMessage', function(_id, _message)
+    if menuList[_id] ~= nil then
+        menuList[_id]['details'].tooltipText = _message
+    else
+        print('-=[[ :: WARNING :: YOU TRIED TO SET A TOOLTIP MESSAGE FOR A NON-EXISTENT MENU ID :: ]]=-')
     end
 end)
 

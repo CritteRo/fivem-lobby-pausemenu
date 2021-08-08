@@ -27,20 +27,23 @@ AddEventHandler("lobby.AddPlayerToMenu", function(_buttonParams)
     TriggerEvent('lobbymenu:ResetPlayerList', 'critMenu.ExampleMenu')
     TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "CritteR", '', math.random(1,100), 65, 1, true, 12, 6)
     TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "NTT", '', math.random(1,100), 65, 2, true, 12, 6)
-    TriggerEvent('lobbymenu:UpdateMenu')
+
+    TriggerEvent('lobbymenu:SetTooltipMessage', 'critMenu.ExampleMenu', "Tooltip message")
+    TriggerEvent('lobbymenu:UpdateMenu', 'critMenu.ExampleMenu')
 end)
 
 AddEventHandler("lobby.AddDetailsToMenu", function(_buttonParams)
     --TriggerEvent('lobbymenu:SetTextBoxToColumn', 'critMenu.ExampleMenu', 2, "Title", "You can even set it to the second column, if that's what you want.", "Footer text.")
     TriggerEvent('lobbymenu:ResetDetailsRowList', 'critMenu.ExampleMenu')
     TriggerEvent('lobbymenu:AddDetailsRow', 'critMenu.ExampleMenu', "Updated Row 1", "~y~2 minutes~s~")
+    TriggerEvent('lobbymenu:SetTooltipMessage', 'critMenu.ExampleMenu', "")
 
-    TriggerEvent('lobbymenu:UpdateMenu')
+    TriggerEvent('lobbymenu:UpdateMenu', 'critMenu.ExampleMenu')
 end)
 
 AddEventHandler("lobby.AddWarningToMenu", function(_buttonParams)
     --TriggerEvent('lobbymenu:SetTextBoxToColumn', 'critMenu.ExampleMenu', 3, "Title", "Need more text? Sure, just active on both columns.", "Footer text.")
-    TriggerEvent('lobbymenu:ReloadMenu')
+    TriggerEvent('lobbymenu:ReloadMenu', 'critMenu.ExampleMenu')
 end)
 
 RegisterCommand('showfr', function()

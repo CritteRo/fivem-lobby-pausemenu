@@ -128,15 +128,15 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
             ScaleformMovieMethodAddParamInt(0); --unused?
             ScaleformMovieMethodAddParamInt(0); --"Green Checkmark" icon
             EndScaleformMovieMethod();
-
-            --[[
-            BeginScaleformMovieMethodN("SET_DESCRIPTION")
-            PushScaleformMovieFunctionParameterInt(i-1) --This is a type. 0 is tooltip bellow buttons. 3 is a loading thing on the player column.
-            PushScaleformMovieFunctionParameterString("Test description\n"..k.text.."\n"..k.rightText.."\nTest12")
-            PushScaleformMovieMethodParameterInt(0) --toggle, Info icon flashing
-            PushScaleformMovieMethodParameterInt(0) --togle, text flashing.
-            EndScaleformMovieMethod()]]
         end
+
+        --[[ SET TOOLTIP ]]--
+        BeginScaleformMovieMethodN("SET_DESCRIPTION")
+        PushScaleformMovieFunctionParameterInt(0) --This is a type. 0 is tooltip bellow buttons. 3 is a loading thing on the player column.
+        PushScaleformMovieFunctionParameterString(_details.tooltipText)
+        PushScaleformMovieMethodParameterInt(0) --toggle, Info icon flashing
+        PushScaleformMovieMethodParameterInt(0) --togle, text flashing.
+        EndScaleformMovieMethod()
     end
 
     Citizen.Wait(10)
@@ -144,7 +144,7 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     ScaleformMovieMethodAddParamInt(0); --column
     EndScaleformMovieMethod();
 
-    --[[ :: This is the big reclange that you can find on Pause Menu at Notifications or Jobs, basically a big text box with R* background :: ]]--
+    --[[ :: This is the big rectangle that you can find on Pause Menu at Notifications or Jobs, basically a big text box with R* background :: ]]--
     if _details.showTextBoxToColumn ~= 0 and _details.showTextBoxToColumn < 4 then
         BeginScaleformMovieMethodOnFrontend("SHOW_WARNING_MESSAGE");
         ScaleformMovieMethodAddParamInt(1); --showToggle
@@ -309,8 +309,16 @@ function updateButtonScaleform(_buttons)
             ScaleformMovieMethodAddParamTextureNameString(k.RockStarLogo); --Setting this as a number string will show the Rockstar logo on the button.
             ScaleformMovieMethodAddParamInt(k.symbol); --0 = shows raw rightText. 1 = Star symbol, 2 = skull, 3 = race flag, 4 = shield with cross(TDM?), 5 = multiple skulls, 6 - blank, 7 = castle, 9 = parachute, 10 = car with explosion.
             ScaleformMovieMethodAddParamTextureNameString(k.rightText);
-            ScaleformMovieMethodAddParamInt(0);
-            ScaleformMovieMethodAddParamBool(true);
+            ScaleformMovieMethodAddParamInt(1); --unused?
+            ScaleformMovieMethodAddParamInt(1); --unused?
+            ScaleformMovieMethodAddParamInt(0); --This makes the first button (only the first) flicker
+            if _buttons[i+1] ~= nil then
+                ScaleformMovieMethodAddParamInt(0); --This adds the bar above the button. Does not work for first button.
+            else
+                ScaleformMovieMethodAddParamInt(1); --This adds the bar above the button. Does not work for first button.
+            end
+            ScaleformMovieMethodAddParamInt(0); --unused?
+            ScaleformMovieMethodAddParamInt(0); --"Green Checkmark" icon
             EndScaleformMovieMethod();
         end
     end
@@ -347,6 +355,12 @@ function updatePlayersScaleform(_players, _details)
             end
         end
     end
+    BeginScaleformMovieMethodN("SET_DESCRIPTION")
+    PushScaleformMovieFunctionParameterInt(0) --This is a type. 0 is tooltip bellow buttons. 3 is a loading thing on the player column.
+    PushScaleformMovieFunctionParameterString(_details.tooltipText)
+    PushScaleformMovieMethodParameterInt(0) --toggle, Info icon flashing
+    PushScaleformMovieMethodParameterInt(0) --togle, text flashing.
+    EndScaleformMovieMethod()
 end
 
 function updateDetailsScaleform(_details,_rowDetails)
@@ -375,6 +389,12 @@ function updateDetailsScaleform(_details,_rowDetails)
             end
         end
     end
+    BeginScaleformMovieMethodN("SET_DESCRIPTION")
+    PushScaleformMovieFunctionParameterInt(0) --This is a type. 0 is tooltip bellow buttons. 3 is a loading thing on the player column.
+    PushScaleformMovieFunctionParameterString(_details.tooltipText)
+    PushScaleformMovieMethodParameterInt(0) --toggle, Info icon flashing
+    PushScaleformMovieMethodParameterInt(0) --togle, text flashing.
+    EndScaleformMovieMethod()
 end
 
 function updateTextboxScaleform(_header, _details)
@@ -409,6 +429,12 @@ function updateTextboxScaleform(_header, _details)
             Citizen.Wait(10)
         end
     end
+    BeginScaleformMovieMethodN("SET_DESCRIPTION")
+    PushScaleformMovieFunctionParameterInt(0) --This is a type. 0 is tooltip bellow buttons. 3 is a loading thing on the player column.
+    PushScaleformMovieFunctionParameterString(_details.tooltipText)
+    PushScaleformMovieMethodParameterInt(0) --toggle, Info icon flashing
+    PushScaleformMovieMethodParameterInt(0) --togle, text flashing.
+    EndScaleformMovieMethod()
 end
 
 
