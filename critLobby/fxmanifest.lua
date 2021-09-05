@@ -12,7 +12,8 @@ client_scripts {
 
 exports {
     "LobbyMenuGetActiveMenu",
-    "LobbyMenuGetSelectedButtonParam"
+    "LobbyMenuGetSelectedButtonParam",
+    'setMenuColumnFocus',
 }
 
 files {

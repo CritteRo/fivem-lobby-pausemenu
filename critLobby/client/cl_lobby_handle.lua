@@ -9,6 +9,7 @@ menuList = {
             showHeaderStrip = true,
             headerColor = 2,
             stripColor = 8,
+            menuOpenFocus = 0,
             menuHeaderText = "MENU",
             menuHeaderAlert = "",
             playerHeaderText = "PLAYERS",
@@ -32,7 +33,7 @@ menuList = {
             [0] = {text = "Button 1", RockStarLogo = "1", rightText = "3", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
         },
         ['players'] = {
-            [0] = {name = "CritteR", crew = "ADM", status = "ADMIN", icon = 65, rank = 60, online = false, rowColor = 11, statusColor = 8},
+            [0] = {name = "CritteR", crew = "ADM", status = "ADMIN", icon = 65, rank = 60, online = false, rowColor = 11, statusColor = 8, event = "lobbymenu:RunDefaultLobbyMenuEvent", buttonParams = 0},
         },
         ['rowDetails'] = {
             [0] = {text = "Button 1", rightText = "3"},
@@ -44,7 +45,7 @@ openedMenu = "lobbymenu:internalmenu:please_never_use_this_in_your_code"
 
 AddEventHandler('lobbymenu:CreateMenu', function(_id, _title, _subtitle, _menuHeaderText, _playerHeaderText, _detailsHeaderText)
     menuList[_id] = {
-        ['header'] = {title = _title, subtitle = _subtitle, showPlayerCard = true, showHeaderStrip = true, headerColor = 2, colorStrip = 8, menuHeaderText = _menuHeaderText, menuHeaderAlert = "", playerHeaderText = _playerHeaderText, playerHeaderAlert = "", detailsHeaderText = _detailsHeaderText, detailsHeaderAlert = ""},
+        ['header'] = {title = _title, subtitle = _subtitle, showPlayerCard = true, showHeaderStrip = true, headerColor = 2, colorStrip = 8, menuHeaderText = _menuHeaderText, menuHeaderAlert = "", playerHeaderText = _playerHeaderText, playerHeaderAlert = "", detailsHeaderText = _detailsHeaderText, detailsHeaderAlert = "", menuOpenFocus = 0},
         ['details'] = {detailsTitle = "", showWarning = false, showTextBoxToColumn = 0, warningTitle = "", warningText = "", warningRightText = "", tooltipText = "", textureDirectory = '', textureName = '', cashValue = 0, rpValue = 0, apValue = 0},
         ['buttons'] = {
             [0] = {text = "internal_button_dont_render", RockStarLogo = "", rightText = "", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
@@ -58,12 +59,17 @@ AddEventHandler('lobbymenu:CreateMenu', function(_id, _title, _subtitle, _menuHe
     }
 end)
 
-AddEventHandler('lobbymenu:SetHeaderDetails', function(_id, _showPlayerCard, _showHeaderStrip, _headerColor, _stripColor)
+AddEventHandler('lobbymenu:SetHeaderDetails', function(_id, _showPlayerCard, _showHeaderStrip, _headerColor, _stripColor, _menuFocus)
     if menuList[_id] ~= nil then
         menuList[_id]['header'].showPlayerCard = _showPlayerCard
         menuList[_id]['header'].showHeaderStrip = _showHeaderStrip
         menuList[_id]['header'].headerColor = _headerColor
         menuList[_id]['header'].stripColor = _stripColor
+        if _menuFocus ~= nil then
+            if _menuFocus == 0 or _menuFocus == 3 then
+                menuList[_id]['header'].menuOpenFocus = _menuFocus
+            end
+        end
     else
         print('-=[[ :: WARNING :: YOU TRIED TO SET THE DETAILS TAB OF A NON-EXISTENT MENU ID :: ]]=-')
     end
@@ -164,10 +170,14 @@ AddEventHandler('lobbymenu:ResetButtonList', function(_id)
     end
 end)
 
-AddEventHandler('lobbymenu:AddPlayer', function(_id, _name, _crew, _status, _icon, _rank, _isOnline, _rowColor, _statusColor)
+AddEventHandler('lobbymenu:AddPlayer', function(_id, _name, _crew, _status, _icon, _rank, _isOnline, _rowColor, _statusColor, _buttonEvent, _buttonParams)
     if menuList[_id] ~= nil then
         local row = #menuList[_id]['players']+1
-        menuList[_id]['players'][row] = {name = _name, crew = _crew, status = _status, icon = _icon, rank = _rank, online = _isOnline, rowColor = _rowColor, statusColor = _statusColor}
+        menuList[_id]['players'][row] = {name = _name, crew = _crew, status = _status, icon = _icon, rank = _rank, online = _isOnline, rowColor = _rowColor, statusColor = _statusColor, event = "", buttonParams = {}}
+        if _buttonEvent ~= nil and _buttonParams ~= nil then
+            menuList[_id]['players'][row].event = _buttonEvent
+            menuList[_id]['players'][row].buttonParams = _buttonParams
+        end
     else
         print('-=[[ :: WARNING :: YOU TRIED TO ADD A PLAYER FOR A NON-EXISTENT MENU ID :: ]]=-')
     end
@@ -208,6 +218,7 @@ AddEventHandler('lobbymenu:OpenMenu', function(_id, _blurredBackground)
         end
         ActivateFrontendMenu("FE_MENU_VERSION_CORONA", false, -1)
         Citizen.Wait(100)
+        menuFocus = menuList[_id]['header'].menuOpenFocus
         generateLobbyScaleform(menuList[_id]['header'], menuList[_id]['buttons'], menuList[_id]['players'], menuList[_id]['details'], menuList[_id]['rowDetails'])
         openedMenu = _id
     else
@@ -280,16 +291,36 @@ RegisterCommand('lobbymenu:closemenu:cmd', function()
     end
 end)
 
+RegisterCommand('lobbymenu:switchcolumn:cmd', function()
+    if GetCurrentFrontendMenuVersion() == GetHashKey("FE_MENU_VERSION_CORONA") then
+        if menuFocus == 0 then
+            setMenuColumnFocus(3)
+        else
+            setMenuColumnFocus(0)
+        end
+    end
+end)
+
 RegisterCommand('lobbymenu:usebutton:cmd', function()
     if GetCurrentFrontendMenuVersion() == GetHashKey("FE_MENU_VERSION_CORONA") then
+
         local last, current = GetPauseMenuSelection()
         --showBusySpinnerNoScaleform("You just used "..menuButtons[current].text..".")
         PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET")
-        if menuList[openedMenu]['buttons'][current] ~= nil then
-            TriggerEvent(menuList[openedMenu]['buttons'][current].event, menuList[openedMenu]['buttons'][current].buttonParams)
+        if menuFocus == 0 then
+            if menuList[openedMenu]['buttons'][current] ~= nil then
+                TriggerEvent(menuList[openedMenu]['buttons'][current].event, menuList[openedMenu]['buttons'][current].buttonParams)
+            end
+        elseif menuFocus == 3 then
+            if menuList[openedMenu]['players'][current] ~= nil then
+                if menuList[openedMenu]['players'][current].event ~= nil and menuList[openedMenu]['players'][current].buttonParams ~= nil then
+                    TriggerEvent(menuList[openedMenu]['players'][current].event, menuList[openedMenu]['players'][current].buttonParams)
+                end
+            end
         end
     end
 end)
 
 RegisterKeyMapping('lobbymenu:closemenu:cmd', 'Close Frontend Menu', 'keyboard', 'BACK')
 RegisterKeyMapping('lobbymenu:usebutton:cmd', 'Use Frontend Menu Item', 'keyboard', 'RETURN')
+RegisterKeyMapping('lobbymenu:switchcolumn:cmd', 'Switch Frontend Menu Column Focus', 'keyboard', 'Q')

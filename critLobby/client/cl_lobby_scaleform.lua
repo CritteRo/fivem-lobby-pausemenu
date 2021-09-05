@@ -278,7 +278,7 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
 
     --[[  SET FIRST FOCUS  ]]--
     BeginScaleformMovieMethodOnFrontend("SET_COLUMN_FOCUS");
-    ScaleformMovieMethodAddParamInt(0); --// column index // _loc7_
+    ScaleformMovieMethodAddParamInt(menuFocus); --// column index // _loc7_
     ScaleformMovieMethodAddParamInt(1);-- // highlightIndex // _loc6_
     ScaleformMovieMethodAddParamInt(1); --// scriptSetUniqID // _loc4_
     ScaleformMovieMethodAddParamInt(0); --// scriptSetMenuState // _loc5_
@@ -292,6 +292,20 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     GivePedToPauseMenu(PlayerPedPreview, 2)
     SetPauseMenuPedLighting(true)
     SetPauseMenuPedSleepState(true)]]
+end
+
+function setMenuColumnFocus(focus)
+    if focus == 0 or focus == 3 then
+        menuFocus = focus
+
+        BeginScaleformMovieMethodOnFrontend("SET_COLUMN_FOCUS");
+        ScaleformMovieMethodAddParamInt(menuFocus); --// column index // _loc7_
+        ScaleformMovieMethodAddParamInt(1);-- // highlightIndex // _loc6_
+        ScaleformMovieMethodAddParamInt(1); --// scriptSetUniqID // _loc4_
+        ScaleformMovieMethodAddParamInt(0); --// scriptSetMenuState // _loc5_
+        EndScaleformMovieMethod()
+    end
+    --TriggerEvent('lobbymenu:ReloadMenu')
 end
 
 function updateButtonScaleform(_buttons)
