@@ -26,7 +26,7 @@ AddEventHandler("lobby.AddPlayerToMenu", function(_buttonParams)
     setMenuColumnFocus(3)
     --TriggerEvent('lobbymenu:SetTextBoxToColumn', 'critMenu.ExampleMenu', 1, "Title", "This is a text box. You can add as much text as you want here and no one will care.\n\n~y~It's great for info and stuff...~s~", "Footer text.")
     TriggerEvent('lobbymenu:ResetPlayerList', 'critMenu.ExampleMenu')
-    TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "CritteR", '', math.random(1,100), 65, 1, true, 12, 6, 'lobby.UsePlayerEvent', {player = "CritteR"})
+    TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "CritteR", '', math.random(1,100), 65, 1, true, 12, 6, 'lobby.UsePlayerEvent', {player = "CritteR"}, false)
     TriggerEvent('lobbymenu:AddPlayer', 'critMenu.ExampleMenu', "NTT", '', math.random(1,100), 65, 2, true, 12, 6, 'lobby.UsePlayerEvent', {player = "NTT"})
 
     TriggerEvent('lobbymenu:SetTooltipMessage', 'critMenu.ExampleMenu', "Tooltip message")

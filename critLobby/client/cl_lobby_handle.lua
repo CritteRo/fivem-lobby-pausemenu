@@ -33,7 +33,7 @@ menuList = {
             [0] = {text = "Button 1", RockStarLogo = "1", rightText = "3", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
         },
         ['players'] = {
-            [0] = {name = "CritteR", crew = "ADM", status = "ADMIN", icon = 65, rank = 60, online = false, rowColor = 11, statusColor = 8, event = "lobbymenu:RunDefaultLobbyMenuEvent", buttonParams = 0},
+            [0] = {name = "CritteR", crew = "ADM", status = "ADMIN", icon = 65, rank = 60, online = false, rowColor = 11, statusColor = 8, event = "lobbymenu:RunDefaultLobbyMenuEvent", buttonParams = 0, showColorOnLeftBar = true},
         },
         ['rowDetails'] = {
             [0] = {text = "Button 1", rightText = "3"},
@@ -170,10 +170,13 @@ AddEventHandler('lobbymenu:ResetButtonList', function(_id)
     end
 end)
 
-AddEventHandler('lobbymenu:AddPlayer', function(_id, _name, _crew, _status, _icon, _rank, _isOnline, _rowColor, _statusColor, _buttonEvent, _buttonParams)
+AddEventHandler('lobbymenu:AddPlayer', function(_id, _name, _crew, _status, _icon, _rank, _isOnline, _rowColor, _statusColor, _buttonEvent, _buttonParams, _showColorOnLeftBar)
     if menuList[_id] ~= nil then
         local row = #menuList[_id]['players']+1
-        menuList[_id]['players'][row] = {name = _name, crew = _crew, status = _status, icon = _icon, rank = _rank, online = _isOnline, rowColor = _rowColor, statusColor = _statusColor, event = "", buttonParams = {}}
+        menuList[_id]['players'][row] = {name = _name, crew = _crew, status = _status, icon = _icon, rank = _rank, online = _isOnline, rowColor = _rowColor, statusColor = _statusColor, event = "", buttonParams = {}, showColorOnLeftBar = true}
+        if _showColorOnLeftBar ~= nil then
+            menuList[_id]['players'][row].showColorOnLeftBar = _showColorOnLeftBar
+        end
         if _buttonEvent ~= nil and _buttonParams ~= nil then
             menuList[_id]['players'][row].event = _buttonEvent
             menuList[_id]['players'][row].buttonParams = _buttonParams

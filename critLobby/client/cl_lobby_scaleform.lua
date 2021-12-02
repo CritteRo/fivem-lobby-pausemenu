@@ -252,7 +252,7 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
                 ScaleformMovieMethodAddParamBool(false);                -- // isSelectable
                 ScaleformMovieMethodAddParamTextureNameString(k.name);    --  // playerName
                 ScaleformMovieMethodAddParamInt(k.rowColor);     --  // rowColor
-                ScaleformMovieMethodAddParamBool(k.online);               --  // reduceColors (if true: removes color from left bar & reduces color opacity on row itself.)
+                ScaleformMovieMethodAddParamBool(not k.showColorOnLeftBar);               --  // reduceColors (if "false" then shows the color of the row on the left side, else removes color from left bar)
                 ScaleformMovieMethodAddParamInt(0);                    --  // unused
                 ScaleformMovieMethodAddParamInt(k.icon);         --  // right player icon.
                 ScaleformMovieMethodAddParamInt(0);                    --  // unused
@@ -353,7 +353,7 @@ function updatePlayersScaleform(_players, _details)
                 ScaleformMovieMethodAddParamBool(false);                -- // isSelectable
                 ScaleformMovieMethodAddParamTextureNameString(k.name);    --  // playerName
                 ScaleformMovieMethodAddParamInt(k.rowColor);     --  // rowColor
-                ScaleformMovieMethodAddParamBool(k.online);               --  // reduceColors (if true: removes color from left bar & reduces color opacity on row itself.)
+                ScaleformMovieMethodAddParamBool(not k.showColorOnLeftBar);               --  // reduceColors (if "false" then shows the color of the row on the left side, else removes color from left bar)
                 ScaleformMovieMethodAddParamInt(0);                    --  // unused
                 ScaleformMovieMethodAddParamInt(k.icon);         --  // right player icon.
                 ScaleformMovieMethodAddParamInt(0);                    --  // unused
