@@ -112,7 +112,7 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
             ScaleformMovieMethodAddParamInt(i); --// unique ID 0
             ScaleformMovieMethodAddParamInt(1); --// type 0
             ScaleformMovieMethodAddParamInt(0); --// initialIndex 0
-            ScaleformMovieMethodAddParamBool(true); --// isSelectable true
+            ScaleformMovieMethodAddParamBool(k.isSelectable); --// isSelectable true
             ScaleformMovieMethodAddParamTextureNameString(k.text); -- left side text
             ScaleformMovieMethodAddParamTextureNameString(k.RockStarLogo); --Setting this as a number string will show the Rockstar logo on the button.
             ScaleformMovieMethodAddParamInt(k.symbol); --0 = shows raw rightText. 1 = Star symbol, 2 = skull, 3 = race flag, 4 = shield with cross(TDM?), 5 = multiple skulls, 6 - blank, 7 = castle, 9 = parachute, 10 = car with explosion.

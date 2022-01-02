@@ -30,7 +30,7 @@ menuList = {
             apValue = 0
         },
         ['buttons'] = {
-            [0] = {text = "Button 1", RockStarLogo = "1", rightText = "3", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
+            [0] = {text = "Button 1", RockStarLogo = "1", rightText = "3", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent", isSelectable = true},
         },
         ['players'] = {
             [0] = {name = "CritteR", crew = "ADM", status = "ADMIN", icon = 65, rank = 60, online = false, rowColor = 11, statusColor = 8, event = "lobbymenu:RunDefaultLobbyMenuEvent", buttonParams = 0, showColorOnLeftBar = true},
@@ -48,7 +48,7 @@ AddEventHandler('lobbymenu:CreateMenu', function(_id, _title, _subtitle, _menuHe
         ['header'] = {title = _title, subtitle = _subtitle, showPlayerCard = true, showHeaderStrip = true, headerColor = 2, colorStrip = 8, menuHeaderText = _menuHeaderText, menuHeaderAlert = "", playerHeaderText = _playerHeaderText, playerHeaderAlert = "", detailsHeaderText = _detailsHeaderText, detailsHeaderAlert = "", menuOpenFocus = 0},
         ['details'] = {detailsTitle = "", showWarning = false, showTextBoxToColumn = 0, warningTitle = "", warningText = "", warningRightText = "", tooltipText = "", textureDirectory = '', textureName = '', cashValue = 0, rpValue = 0, apValue = 0},
         ['buttons'] = {
-            [0] = {text = "internal_button_dont_render", RockStarLogo = "", rightText = "", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent"},
+            [0] = {text = "internal_button_dont_render", RockStarLogo = "", rightText = "", symbol = 0, buttonParams = 0, event = "lobbymenu:RunDefaultLobbyMenuEvent", isSelectable = false},
         },
         ['players'] = {
             [0] = {name = "internal_player_dont_render", crew = "", status = "", icon = 65, rank = 1, online = false, rowColor = 11, statusColor = 8},
@@ -153,7 +153,10 @@ AddEventHandler('lobbymenu:AddButton', function(_id, _buttonParams, _text, _righ
             rplus = "1"
         end
         local row = #menuList[_id]['buttons']+1
-        menuList[_id]['buttons'][row] = {text = _text, RockStarLogo = rplus, rightText = _rightText, symbol = _rightSymbol, buttonParams = _buttonParams, event = _buttonEvent}
+        menuList[_id]['buttons'][row] = {text = _text, RockStarLogo = rplus, rightText = _rightText, symbol = _rightSymbol, buttonParams = _buttonParams, event = _buttonEvent, isSelectable = true}
+        if _buttonParams == "_IsNotSelectable" then
+            menuList[_id]['buttons'][row].isSelectable = false
+        end
         --print(row)
     else
         print('-=[[ :: WARNING :: YOU TRIED TO ADD A BUTTON FOR A NON-EXISTENT MENU ID :: ]]=-')
