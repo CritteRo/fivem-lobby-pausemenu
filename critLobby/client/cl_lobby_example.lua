@@ -5,7 +5,7 @@ TriggerEvent('lobbymenu:SetHeaderDetails', 'critMenu.ExampleMenu', true, true, 2
 TriggerEvent('lobbymenu:SetDetailsTitle', 'critMenu.ExampleMenu', "Details Title", 'sproffroad', 'spr_offroad_3')
 
 TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {text = "Showing button 1"}, "Button 1", "", false, 0, "lobby.AddPlayerToMenu")
-TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {text = "Showing button 2"}, "Button 2", "", false, 0, "lobby.AddDetailsToMenu")
+TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', "_IsNotSelectable", "Non-Button", "", false, 0, "lobby.AddDetailsToMenu")
 TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {text = "Showing button 3"}, "Button 3", "", false, 0, "lobby.AddWarningToMenu")
 TriggerEvent('lobbymenu:AddButton', 'critMenu.ExampleMenu', {id = 0, text = "Button Used"}, "Close Menu", "", false, 0, "lobbymenu:CloseMenu")
 
