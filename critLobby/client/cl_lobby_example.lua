@@ -1,4 +1,4 @@
---[[ I will add an example menu here, when the API is complete ]]--
+--[[ COMMENTED OUT, AS SOME FOLKS USE THIS OUT-OF-THE-BOX, AND I DON'T WANT TO POLLUTE THEIR SERVER :P
 
 TriggerEvent('lobbymenu:CreateMenu', 'critMenu.ExampleMenu', "Test Lobby Menu", "Subtitles are supported too.", "MENU", "PLAYERS", "INFORMATION")
 TriggerEvent('lobbymenu:SetHeaderDetails', 'critMenu.ExampleMenu', true, true, 2, 6, 0)
@@ -55,3 +55,5 @@ end)
 RegisterCommand('showfr', function()
     TriggerEvent('lobbymenu:OpenMenu', 'critMenu.ExampleMenu', true)
 end)
+
+]]
