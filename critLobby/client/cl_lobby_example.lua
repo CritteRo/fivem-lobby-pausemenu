@@ -1,4 +1,4 @@
---[[ COMMENTED OUT, AS SOME FOLKS USE THIS OUT-OF-THE-BOX, AND I DON'T WANT TO POLLUTE THEIR SERVER :P
+--[[COMMENTED OUT, AS SOME FOLKS USE THIS OUT-OF-THE-BOX, AND I DON'T WANT TO POLLUTE THEIR SERVER :P
 
 TriggerEvent('lobbymenu:CreateMenu', 'critMenu.ExampleMenu', "Test Lobby Menu", "Subtitles are supported too.", "MENU", "PLAYERS", "INFORMATION")
 TriggerEvent('lobbymenu:SetHeaderDetails', 'critMenu.ExampleMenu', true, true, 2, 6, 0)
@@ -49,6 +49,7 @@ end)
 
 AddEventHandler("lobby.UsePlayerEvent", function(_buttonParams)
     --TriggerEvent('lobbymenu:CloseMenu')
+    SetTooltipOnly('You selected player: '.._buttonParams.player, false, false)
     print('You selected player: '.._buttonParams.player)
 end)
 
@@ -56,4 +57,4 @@ RegisterCommand('showfr', function()
     TriggerEvent('lobbymenu:OpenMenu', 'critMenu.ExampleMenu', true)
 end)
 
-]]
+--]]

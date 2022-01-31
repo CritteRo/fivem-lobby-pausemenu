@@ -309,16 +309,20 @@ function setMenuColumnFocus(focus)
 end
 
 function updateButtonScaleform(_buttons)
+    BeginScaleformMovieMethodOnFrontend("SET_DATA_SLOT_EMPTY")
+    ScaleformMovieMethodAddParamInt(0)
+    EndScaleformMovieMethod()
+    --Citizen.Wait(200) --random but mandatory wait, otherwise update will not run
     for i,k in pairs(_buttons) do
         if i>0 then
-            BeginScaleformMovieMethodOnFrontend("UPDATE_SLOT");
+            BeginScaleformMovieMethodOnFrontend("SET_DATA_SLOT");
             ScaleformMovieMethodAddParamInt(0); --// column
             ScaleformMovieMethodAddParamInt(i-1); --// index
             ScaleformMovieMethodAddParamInt(0); --// menu ID 0
             ScaleformMovieMethodAddParamInt(i); --// unique ID 0
             ScaleformMovieMethodAddParamInt(1); --// type 0
             ScaleformMovieMethodAddParamInt(0); --// initialIndex 0
-            ScaleformMovieMethodAddParamBool(true); --// isSelectable true
+            ScaleformMovieMethodAddParamBool(k.isSelectable); --// isSelectable true
             ScaleformMovieMethodAddParamTextureNameString(k.text); -- left side text
             ScaleformMovieMethodAddParamTextureNameString(k.RockStarLogo); --Setting this as a number string will show the Rockstar logo on the button.
             ScaleformMovieMethodAddParamInt(k.symbol); --0 = shows raw rightText. 1 = Star symbol, 2 = skull, 3 = race flag, 4 = shield with cross(TDM?), 5 = multiple skulls, 6 - blank, 7 = castle, 9 = parachute, 10 = car with explosion.
@@ -336,14 +340,22 @@ function updateButtonScaleform(_buttons)
             EndScaleformMovieMethod();
         end
     end
+    Citizen.Wait(10)
+    BeginScaleformMovieMethodOnFrontend("DISPLAY_DATA_SLOT")
+    ScaleformMovieMethodAddParamInt(0)
+    EndScaleformMovieMethod()
 end
 
 function updatePlayersScaleform(_players, _details)
     if _details.showTextBoxToColumn == 0 or _details.showTextBoxToColumn == 2 then
         --[[  PLAYERS  ]]--
+        BeginScaleformMovieMethodOnFrontend("SET_DATA_SLOT_EMPTY")
+        ScaleformMovieMethodAddParamInt(3)
+        EndScaleformMovieMethod()
+        --Citizen.Wait(200) --random but mandatory wait, otherwise update will not run
         for i,k in pairs(_players) do
             if i > 0 then
-                BeginScaleformMovieMethodOnFrontend("UPDATE_SLOT");                   --// call scaleform function
+                BeginScaleformMovieMethodOnFrontend("SET_DATA_SLOT");                   --// call scaleform function
                 ScaleformMovieMethodAddParamInt(3);                      --// frontend menu column
                 ScaleformMovieMethodAddParamInt(i-1);                      --// row index
                 ScaleformMovieMethodAddParamInt(0);                     -- // menu ID
@@ -375,14 +387,23 @@ function updatePlayersScaleform(_players, _details)
     PushScaleformMovieMethodParameterInt(0) --toggle, Info icon flashing
     PushScaleformMovieMethodParameterInt(0) --togle, text flashing.
     EndScaleformMovieMethod()
+
+    Citizen.Wait(10)
+    BeginScaleformMovieMethodOnFrontend("DISPLAY_DATA_SLOT");
+    ScaleformMovieMethodAddParamInt(3)
+    EndScaleformMovieMethod()
 end
 
 function updateDetailsScaleform(_details,_rowDetails)
     if _details.showTextBoxToColumn == 0 or _details.showTextBoxToColumn == 1 then
         --[[  SET DETAILS ROWS ]]--
+        BeginScaleformMovieMethodOnFrontend("SET_DATA_SLOT_EMPTY")
+        ScaleformMovieMethodAddParamInt(1)
+        EndScaleformMovieMethod()
+        --Citizen.Wait(200) --random but mandatory wait, otherwise update will not run
         for i,k in pairs(_rowDetails) do
             if i > 0 then
-                BeginScaleformMovieMethodOnFrontend("UPDATE_SLOT");
+                BeginScaleformMovieMethodOnFrontend("SET_DATA_SLOT");
                 ScaleformMovieMethodAddParamInt(1); --// column
                 ScaleformMovieMethodAddParamInt(i-1); --// index
                 ScaleformMovieMethodAddParamInt(0); --// menu ID 0
@@ -408,6 +429,11 @@ function updateDetailsScaleform(_details,_rowDetails)
     PushScaleformMovieFunctionParameterString(_details.tooltipText)
     PushScaleformMovieMethodParameterInt(0) --toggle, Info icon flashing
     PushScaleformMovieMethodParameterInt(0) --togle, text flashing.
+    EndScaleformMovieMethod()
+
+    Citizen.Wait(10)
+    BeginScaleformMovieMethodOnFrontend("DISPLAY_DATA_SLOT")
+    ScaleformMovieMethodAddParamInt(1)
     EndScaleformMovieMethod()
 end
 
@@ -446,6 +472,15 @@ function updateTextboxScaleform(_header, _details)
     BeginScaleformMovieMethodN("SET_DESCRIPTION")
     PushScaleformMovieFunctionParameterInt(0) --This is a type. 0 is tooltip bellow buttons. 3 is a loading thing on the player column.
     PushScaleformMovieFunctionParameterString(_details.tooltipText)
+    PushScaleformMovieMethodParameterInt(0) --toggle, Info icon flashing
+    PushScaleformMovieMethodParameterInt(0) --togle, text flashing.
+    EndScaleformMovieMethod()
+end
+
+function SetTooltipOnly(tooltip, flashIcon, flashText)
+    BeginScaleformMovieMethodN("SET_DESCRIPTION")
+    PushScaleformMovieFunctionParameterInt(0) --This is a type. 0 is tooltip bellow buttons. 3 is a loading thing on the player column.
+    PushScaleformMovieFunctionParameterString(tooltip)
     PushScaleformMovieMethodParameterInt(0) --toggle, Info icon flashing
     PushScaleformMovieMethodParameterInt(0) --togle, text flashing.
     EndScaleformMovieMethod()

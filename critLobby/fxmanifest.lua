@@ -14,6 +14,7 @@ exports {
     "LobbyMenuGetActiveMenu",
     "LobbyMenuGetSelectedButtonParam",
     'setMenuColumnFocus',
+    'SetTooltipOnly'
 }
 
 files {
