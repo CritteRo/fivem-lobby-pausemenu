@@ -161,13 +161,13 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
             ScaleformMovieMethodAddParamInt(1); --column from where to start.
             ScaleformMovieMethodAddParamInt(2); --columns to cover.
         end
-        ScaleformMovieMethodAddParamTextureNameString(_details.warningText); --body String.
-        ScaleformMovieMethodAddParamTextureNameString(_details.warningTitle); --title String.
+        ScaleformMovieMethodAddParamTextureNameString(_details.textBoxText); --body String.
+        ScaleformMovieMethodAddParamTextureNameString(_details.textBoxTitle); --title String.
         ScaleformMovieMethodAddParamInt(0); --background height?
         ScaleformMovieMethodAddParamTextureNameString(''); --textureDictionary
         ScaleformMovieMethodAddParamTextureNameString(''); --textureName
         ScaleformMovieMethodAddParamInt(0); --image Alignment. (Probably justify. 0 = left)
-        ScaleformMovieMethodAddParamTextureNameString(_details.warningRightText); --footer String.
+        ScaleformMovieMethodAddParamTextureNameString(_details.textBoxRightText); --footer String.
         ScaleformMovieMethodAddParamInt(0); --request background texture.
         EndScaleformMovieMethod()
         Citizen.Wait(10)
