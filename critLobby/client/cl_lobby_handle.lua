@@ -223,7 +223,10 @@ AddEventHandler('lobbymenu:OpenMenu', function(_id, _blurredBackground)
             TriggerScreenblurFadeIn(1000) --screen blur
         end
         ActivateFrontendMenu("FE_MENU_VERSION_CORONA", false, -1)
-        Citizen.Wait(100)
+        --Citizen.Wait(100)
+        while not IsFrontendReadyForControl() do
+            Citizen.Wait(0)
+        end
         menuFocus = menuList[_id]['header'].menuOpenFocus
         generateLobbyScaleform(menuList[_id]['header'], menuList[_id]['buttons'], menuList[_id]['players'], menuList[_id]['details'], menuList[_id]['rowDetails'])
         openedMenu = _id
