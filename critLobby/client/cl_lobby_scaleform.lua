@@ -14,6 +14,11 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     EndScaleformMovieMethod();
     Citizen.Wait(10)
 
+    SetScriptGfxDrawBehindPausemenu(true)
+    BeginScaleformMovieMethodOnFrontend("INSTRUCTIONAL_BUTTONS");
+    ScaleformMovieMethodAddParamPlayerNameString("SET_DATA_SLOT_EMPTY");
+    EndScaleformMovieMethod()
+
     BeginScaleformMovieMethodOnFrontendHeader("SET_HEADER_TITLE")
     ScaleformMovieMethodAddParamTextureNameString(_header.title);       -- // Set the title
     ScaleformMovieMethodAddParamBool(false);        -- // purpose unknown, is always 0 in decompiled scripts.
@@ -140,6 +145,7 @@ function generateLobbyScaleform(_header, _buttons, _players, _details, _rowDetai
     end
 
     Citizen.Wait(10)
+
     BeginScaleformMovieMethodOnFrontend("DISPLAY_DATA_SLOT"); --displays the data slots provided above
     ScaleformMovieMethodAddParamInt(0); --column
     EndScaleformMovieMethod();
@@ -484,6 +490,74 @@ function SetTooltipOnly(tooltip, flashIcon, flashText)
     PushScaleformMovieMethodParameterInt(0) --toggle, Info icon flashing
     PushScaleformMovieMethodParameterInt(0) --togle, text flashing.
     EndScaleformMovieMethod()
+end
+
+
+-----------------------------------------------------------------------
+
+Scaleform = {}
+
+function Scaleform.Request(scaleform)
+    local scaleform_handle = RequestScaleformMovie(scaleform)
+    while not HasScaleformMovieLoaded(scaleform_handle) do
+        Citizen.Wait(0)
+    end
+    return scaleform_handle
+end
+
+function Scaleform.CallFunction(scaleform, returndata, the_function, ...)
+    BeginScaleformMovieMethod(scaleform, the_function)
+    local args = {...}
+
+    if args ~= nil then
+        for i = 1,#args do
+            local arg_type = type(args[i])
+
+            if arg_type == "boolean" then
+                ScaleformMovieMethodAddParamBool(args[i])
+            elseif arg_type == "number" then
+                if not string.find(args[i], '%.') then
+                    ScaleformMovieMethodAddParamInt(args[i])
+                else
+                    ScaleformMovieMethodAddParamFloat(args[i])
+                end
+            elseif arg_type == "string" then
+                ScaleformMovieMethodAddParamTextureNameString(args[i])
+            end
+        end
+
+        if not returndata then
+            EndScaleformMovieMethod()
+        else
+            return EndScaleformMovieMethodReturnValue()
+        end
+    end
+end
+
+function requestButtonScaleform()
+    local buttonScaleformId = Scaleform.Request("PAUSE_MENU_INSTRUCTIONAL_BUTTONS")
+    --DrawScaleformMovieFullscreen(buttonScaleformId, 255, 255, 255, 0, 0)
+    local width, height = GetActiveScreenResolution()
+    Scaleform.CallFunction(buttonScaleformId, false, "SET_DISPLAY_CONFIG", 1280, 720, 0.05, 0.95, 0.05, 0.95, true, false, false, width, height)
+    Scaleform.CallFunction(buttonScaleformId, false, "SET_BACKGROUND_COLOUR", 0,0,0,80)
+    Scaleform.CallFunction(buttonScaleformId, false, "CLEAR_ALL")
+    Scaleform.CallFunction(buttonScaleformId, false, "SET_CLEAR_SPACE", 200)
+
+    return buttonScaleformId
+end
+
+
+function clearInstructionalButtons(scaleform)
+    Scaleform.CallFunction(scaleform, false, "CLEAR_ALL")
+    Scaleform.CallFunction(scaleform, false, "SET_CLEAR_SPACE", 200)
+end
+
+function setInstructionalButtons(setArray, scaleform)
+    for i,k in pairs(setArray) do
+        Scaleform.CallFunction(scaleform, false, "SET_DATA_SLOT",i, k.input, k.text)
+    end
+
+    Scaleform.CallFunction(scaleform, false, "DRAW_INSTRUCTIONAL_BUTTONS")
 end
 
 

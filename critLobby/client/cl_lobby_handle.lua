@@ -38,6 +38,9 @@ menuList = {
         ['rowDetails'] = {
             [0] = {text = "Button 1", rightText = "3"},
         },
+        ['instructionalButtons'] = {
+            [0] = {input = "", text = "Button 1"},
+        }
     }
 }
 
@@ -145,6 +148,25 @@ AddEventHandler('lobbymenu:SetDetailsCashRPandAP', function(_id, _cashValue, _rp
     end
 end)
 
+AddEventHandler('lobbymenu:AddInstructionalButton', function(_id, _input, _text)
+    if menuList[_id] ~= nil then
+        if menuList[_id]['instructionalButtons'] == nil then
+            menuList[_id]['instructionalButtons'] = {}
+        end
+        local row = #menuList[_id]['instructionalButtons']+1
+        menuList[_id]['instructionalButtons'][row] = {input = _input, text = _text}
+    else
+        print('-=[[ :: WARNING :: YOU TRIED TO SET INSTRUCTIONAL BUTTONS FOR A NON-EXISTENT MENU ID :: ]]=-')
+    end
+end)
+
+AddEventHandler('lobbymenu:ResetButtonList', function(_id)
+    if menuList[_id] ~= nil then
+        menuList[_id]['instructionalButtons'] = {}
+    else
+        print('-=[[ :: WARNING :: YOU TRIED TO RESET THE INSTRUCTIONAL BUTTON LIST FOR A NON-EXISTENT MENU ID :: ]]=-')
+    end
+end)
 
 AddEventHandler('lobbymenu:AddButton', function(_id, _buttonParams, _text, _rightText, _showRockStarSymbol, _rightSymbol, _buttonEvent)
     if menuList[_id] ~= nil then
@@ -230,8 +252,23 @@ AddEventHandler('lobbymenu:OpenMenu', function(_id, _blurredBackground)
         menuFocus = menuList[_id]['header'].menuOpenFocus
         generateLobbyScaleform(menuList[_id]['header'], menuList[_id]['buttons'], menuList[_id]['players'], menuList[_id]['details'], menuList[_id]['rowDetails'])
         openedMenu = _id
+        --TriggerEvent('lobbymenu:Internal:ShowInstructionalButtons', _id)
     else
         print('-=[[ :: WARNING :: YOU TRIED TO OPEN A NON-EXISTENT MENU ID :: ]]=-')
+    end
+end)
+
+AddEventHandler('lobbymenu:Internal:ShowInstructionalButtons', function(_id)
+    local id = _id
+    if menuList[id] ~= nil and menuList[id]['instructionalButtons'] ~= nil then
+        if #menuList[id]['instructionalButtons'] > 0 then
+            local scale = requestButtonScaleform()
+            setInstructionalButtons(menuList[id]['instructionalButtons'], scale)
+            while IsPauseMenuActive() and id == LobbyMenuGetActiveMenu() do
+                --DrawScaleformMovieFullscreen(scale, 255, 255, 255, 0, 0)
+                Citizen.Wait(0)
+            end
+        end
     end
 end)
 
