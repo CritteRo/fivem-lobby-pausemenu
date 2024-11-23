@@ -302,6 +302,25 @@ AddEventHandler('lobbymenu:UpdateMenu', function(_id)
     end
 end)
 
+AddEventHandler('lobbymenu:UpdateMenu2', function(_id, _details, _buttons, _players, _textbox)
+    if menuList[_id] ~= nil then
+        if _details then
+            updateDetailsScaleform(menuList[_id]['details'], menuList[_id]['rowDetails'])
+        end
+        if _buttons then
+            updateButtonScaleform(menuList[_id]['buttons'])
+        end
+        if _players then
+            updatePlayersScaleform(menuList[_id]['players'], menuList[_id]['details'])
+        end
+        if _textbox then
+            updateTextboxScaleform(menuList[_id]['header'], menuList[_id]['details'])
+        end
+    else
+        print('-=[[ :: WARNING :: YOU TRIED TO UPDATE2 A NON-EXISTENT MENU ID :: ]]=-')
+    end
+end)
+
 function LobbyMenuGetActiveMenu()
     local menu = nil
     if openedMenu ~= "lobbymenu:internalmenu:please_never_use_this_in_your_code" then
